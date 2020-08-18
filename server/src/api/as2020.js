@@ -1,11 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable no-console */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable linebreak-style */
-/* eslint-disable quotes */
-/* eslint-disable linebreak-style */
-/* eslint-disable spaced-comment */
-/* eslint-disable no-unused-vars */
 const express = require('express');
 // const MongoClient = require('mongodb').MongoClient;
 const monk = require('monk');
@@ -22,14 +14,36 @@ const router = express.Router();
 //get list of parties
 router.get('/listofparties', async (req, res, next) => {
   try {
-    const items = await REPO3.find(
-      {},
-      { partyName: true },
+    const items = await REPO3.aggregate(
+      [
+        {
+          "$group": {
+            _id: {
+              partyName: "$partyName",
+              brokerName: "$brokerName"
+            }
+          }
+        }
+      ]
     );
     res.json(items);
   } catch (error) {
     next(error);
   }
 });
+
+//get party data
+router.get('/partydata/:pn/:bn', async (req, res, next) => {
+  try {
+    // console.log(req.params);
+    const { pn, bn } = req.params;
+    const items = await REPO3.find(
+      { "partyName": pn, "brokerName": bn }
+    );
+    res.json(items);
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router;
