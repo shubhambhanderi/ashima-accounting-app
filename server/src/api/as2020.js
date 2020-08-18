@@ -19,7 +19,7 @@ const REPO3 = db.get('REPO3');
 
 const router = express.Router();
 
-//Read ALL
+//get list of parties
 router.get('/listofparties', async (req, res, next) => {
   try {
     const items = await REPO3.find(
