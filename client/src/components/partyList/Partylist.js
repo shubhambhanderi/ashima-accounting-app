@@ -1,14 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Container, makeStyles, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import axios from 'axios';
-import { Select, Button } from 'antd';
 import Partydetail from '../partyDetail/Partydetail';
 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(5),
+    minWidth: 120,
+  }
+}));
+
 function Partylist() {
+  const classes = useStyles();
   const [partyName, setpartyName] = useState();
-
-  const { Option } = Select;
-
   const [partyObject, setpartyObject] = useState();
+  const [currentParty, setCurrentParty] = useState('');
+  const handleChange = (e) => {
+    // console.log(e.target.value);
+    setCurrentParty(e.target.value);
+    setpartyObject(partyName[e.target.value]._id);
+  };
+
   useEffect(() => {
     axios.get('http://localhost:5000/api/v1/as2020/listofparties')
       .then(res => {
@@ -21,51 +35,25 @@ function Partylist() {
 
   }, []);
 
-  function onChange(value) {
-    // console.log(`selected ${value}`);
-    setpartyObject(partyName[value]._id)
-  }
-
-  function onBlur() {
-    console.log('blur');
-  }
-
-  function onFocus() {
-    console.log('focus');
-  }
-
-  function onSearch(val) {
-    console.log('search:', val);
-  }
-
   return (
-    <div>
-      <div>
-
+    <Container>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">PartyList</InputLabel>
         <Select
-          showSearch
-          style={{ width: '100%' }}
-          placeholder="Select a person"
-          optionFilterProp="children"
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onSearch={onSearch}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={currentParty}
+          onChange={handleChange}
         >
           {
             partyName && partyName.map((party, index) => (
-              <Option value={index}>{party._id.partyName} {party._id.brokerName}</Option>
+              <MenuItem key={index} value={index}>{party._id.partyName} {party._id.brokerName}</MenuItem>
             ))
           }
         </Select>
-      </div>
-      <div>
-        <Partydetail partyObject={partyObject} />
-      </div>
-    </div>
+      </FormControl>
+      <Partydetail partyObject={partyObject} />
+    </Container>
   )
 }
 
