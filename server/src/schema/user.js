@@ -9,6 +9,8 @@ const Joi = require('@hapi/joi');
 // const userData = db.get('userData');
 
 const userSchema = Joi.object({
+  firstname: Joi.string().trim().lowercase().required(),
+  lastname: Joi.string().trim().lowercase().required(),
   username: Joi.string().trim().lowercase().min(3).max(30).required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
   isAdmin: Joi.boolean(),

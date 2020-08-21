@@ -5,12 +5,17 @@ import {
   Route,
 } from "react-router-dom";
 import Partylist from './components/partyList/Partylist';
+import Login from './components/Login';
+import Register from './components/Register';
+
 
 function App() {
 
   return (
     <Router>
-      <Route exact path="/partylist" component={Partylist} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/register" component={Register} />
+      <Route path="/partylist" component={Partylist} />
     </Router>
 
   );
