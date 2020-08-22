@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, makeStyles, InputLabel, MenuItem, FormControl, Button, Select } from '@material-ui/core';
+import { Container, makeStyles, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import Partydetail from '../partyDetail/Partydetail';
 import UserService from "../../services/user.service";
-import AuthService from "../../services/auth.service";
-
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -49,17 +47,8 @@ function Partylist(props) {
     );
   }, []);
 
-  const logOut = () => {
-    AuthService.logout();
-    props.history.push("/login");
-    window.location.reload();
-  };
-
   return (
     <Container>
-      <center>
-        <Button className={classes.lgbtn} variant="contained" onClick={logOut}>Logout</Button>
-      </center>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">PartyList</InputLabel>
         <Select

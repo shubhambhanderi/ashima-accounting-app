@@ -6,10 +6,12 @@ import {
   Redirect,
 } from "react-router-dom";
 import Partylist from './components/partyList/Partylist';
-import Login from './components/Login';
-import Register from './components/Register';
+// import Login from './components/Login';
 import isAuthenticated from './services/isauthenticated.service';
-
+import Register from './components/Register';
+import Login from './components/Login';
+import Header from './components/header/Header';
+import Menulist from './components/menuList/Menulist';
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
       <Route exact path="/register" component={Register} />
       {!loggedIn ? <Redirect to="/login" /> :
         <>
+          <Header />
+          <Route path="/menulist" component={Menulist} />
           <Route path="/partylist" component={Partylist} />
         </>}
     </Router>

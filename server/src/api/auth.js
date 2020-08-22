@@ -26,7 +26,7 @@ router.post("/signup", (req, res, next) => {
 
     const value = await User.validateAsync(req.body);
     const inserted = await userData.insert(value);
-    res.json(inserted);
+    // res.json(inserted);
     // If the user signs up, we might as well give them a token right now
     // So they don't then immediately have to log in as well
     const token = jwt.sign(inserted, process.env.SECRET);
