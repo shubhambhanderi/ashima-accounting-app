@@ -75,7 +75,7 @@ function Login(props) {
 
     AuthService.login(username, password).then(
       () => {
-        props.history.push("/menulist");
+        props.history.push("/companylist");
         window.location.reload();
       },
       (error) => {

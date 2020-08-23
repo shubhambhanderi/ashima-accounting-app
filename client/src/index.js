@@ -6,11 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/blk-design-system-react.css";
 // import "./assets/demo/demo.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
 
 ReactDOM.render(
-  <React.Fragment>
+  <Router>
     <App />
-  </React.Fragment>,
+  </Router>,
   document.getElementById('root')
 );
 

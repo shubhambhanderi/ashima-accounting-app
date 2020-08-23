@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
+  useLocation,
 } from "react-router-dom";
 import Partylist from './components/partyList/Partylist';
 // import Login from './components/Login';
@@ -11,23 +12,38 @@ import isAuthenticated from './services/isauthenticated.service';
 import Register from './components/Register';
 import Login from './components/Login';
 import Header from './components/header/Header';
+import Companylist from './components/companyList/Companylist';
 import Menulist from './components/menuList/Menulist';
+import Partydetail from './components/partyDetail/Partydetail';
 
 function App() {
 
   const loggedIn = isAuthenticated();
 
+
+  const location = useLocation().pathname;
+
+  // console.log(location.pathname);
+
   return (
-    <Router>
+
+
+    <>
+      {
+        loggedIn && (location === '/' || location === '/login') ?
+          <Redirect to="/companylist" /> : null
+      }
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
       {!loggedIn ? <Redirect to="/login" /> :
         <>
           <Header />
+          <Route path="/companylist" component={Companylist} />
           <Route path="/menulist" component={Menulist} />
           <Route path="/partylist" component={Partylist} />
+          <Route path="/partydetail" component={Partydetail} />
         </>}
-    </Router>
+    </>
   );
 }
 

@@ -14,7 +14,7 @@ import {
 
 // let ps = null;
 
-class Menulist extends React.Component {
+class Companylist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,21 +40,21 @@ class Menulist extends React.Component {
     }
     document.body.classList.toggle("profile-page");
   }
-  toggleTabsPurchase = (e, stateName, index) => {
+  toggleTabsAshima = (e, stateName, index) => {
     e.preventDefault();
     this.setState({
       [stateName]: index
     });
-    // this.props.history.push("/partylist");
-    // window.location.reload();
-  };
-  toggleTabsSales = (e, stateName, index) => {
-    e.preventDefault();
-    this.setState({
-      [stateName]: index
-    });
-    this.props.history.push("/partylist");
+    this.props.history.push("/menulist");
     window.location.reload();
+  };
+  toggleTabsSSF = (e, stateName, index) => {
+    e.preventDefault();
+    this.setState({
+      [stateName]: index
+    });
+    // this.props.history.push("/menulist");
+    // window.location.reload();
   };
   render() {
     return (
@@ -80,11 +80,11 @@ class Menulist extends React.Component {
                         className={classnames({
                           "active show": this.state.pills === 1
                         })}
-                        onClick={e => this.toggleTabsPurchase(e, "pills", 1)}
+                        onClick={e => this.toggleTabsAshima(e, "pills", 1)}
                         href="#pablo"
                       >
-                        <i className="tim-icons icon-cart" />
-                    Purchase Order
+                        <i className="tim-icons icon-bank" />
+                    Ashima Fabrics
                   </NavLink>
                     </NavItem>
                     <NavItem>
@@ -92,11 +92,11 @@ class Menulist extends React.Component {
                         className={classnames({
                           "active show": this.state.pills === 2
                         })}
-                        onClick={e => this.toggleTabsSales(e, "pills", 2)}
+                        onClick={e => this.toggleTabsSSF(e, "pills", 2)}
                         href="#pablo"
                       >
-                        <i className="tim-icons icon-paper" />
-                    Sales Order
+                        <i className="tim-icons icon-bank" />
+                    Shree Sai Fashion Fab
                   </NavLink>
                     </NavItem>
                   </Nav>
@@ -110,4 +110,4 @@ class Menulist extends React.Component {
   }
 }
 
-export default Menulist;
+export default Companylist;
