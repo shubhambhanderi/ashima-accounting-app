@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import UserService from "../../services/user.service";
 // import AuthService from "../../services/auth.service";
 
-function Partydetail({ partyObject }) {
+function Partydetail(props) {
 
+  const [partyObject, setpartyObject] = props.partyState;
   const [detail, setDetail] = useState();
 
   useEffect(() => {
@@ -30,9 +31,13 @@ function Partydetail({ partyObject }) {
 
   }, [partyObject]);
 
+  console.log(partyObject)
+
   return (
     <div>
       {JSON.stringify(detail)}
+      <br></br>
+      {JSON.stringify(partyObject)}
     </div>
   )
 }
