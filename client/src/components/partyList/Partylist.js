@@ -35,52 +35,51 @@ function Partylist() {
   }, []);
 
   return (
-    <Container>
-
-      <div className="profile-page">
-        <div className="wrapper" >
-          <div className="page-header">
-            <img
-              alt="..."
-              className="dots"
-              src={require("../../assets/img/dots.png")}
-            />
-            <img
-              alt="..."
-              className="path"
-              src={require("../../assets/img/path4.png")}
-            />
-            <Container>
-              <Table hover>
-                <thead>
-                  <tr>
-                    <th className="text-center">#</th>
-                    <th>List of Parties</th>
-                    <th className="text-right">Actions</th>
+    <div className="profile-page">
+      <div className="wrapper" >
+        <div style={{ height: "150px" }}>
+        </div>
+        <div style={{ minHeight: "calc(100vh - 150px)" }}>
+          {/* <img
+            alt="..."
+            className="dots"
+            src={require("../../assets/img/dots.png")}
+          />
+          <img
+            alt="..."
+            className="path"
+            src={require("../../assets/img/path4.png")}
+          /> */}
+          <Container>
+            <Table hover>
+              <thead>
+                <tr>
+                  <th className="text-center">#</th>
+                  <th>List of Parties</th>
+                  <th className="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {partyName && partyName.map((party, index) => (
+                  <tr key={index}>
+                    <td className="text-center">{index}</td>
+                    <td>{party._id.partyName}</td>
+                    <td className="text-right">
+                      <Button className="btn-icon" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                        <i className="fa fa-user"></i>
+                      </Button>{` `}
+                      <Button className="btn-icon" color="success" size="sm">
+                        <i className="fa fa-edit"></i>
+                      </Button>{` `}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {partyName && partyName.map((party, index) => (
-                    <tr key={index}>
-                      <td className="text-center">{index}</td>
-                      <td>{party._id.partyName}</td>
-                      <td className="text-right">
-                        <Button className="btn-icon" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
-                          <i className="fa fa-user"></i>
-                        </Button>{` `}
-                        <Button className="btn-icon" color="success" size="sm">
-                          <i className="fa fa-edit"></i>
-                        </Button>{` `}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Container>
-          </div>
+                ))}
+              </tbody>
+            </Table>
+          </Container>
         </div>
       </div>
-    </Container>
+    </div>
   )
 }
 
