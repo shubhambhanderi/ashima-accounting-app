@@ -17440,7 +17440,7 @@ textarea.form-control:active {
 .profile-page,
 .register-page {
   background-image: url("../../assets/img/dots.png");
-  background-size: cover;
+  background-size: contain;
 }
 
 @media (max-width: 991.98px) {

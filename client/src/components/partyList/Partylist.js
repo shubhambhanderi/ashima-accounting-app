@@ -7,13 +7,15 @@ import {
 // import Partydetail from '../partyDetail/Partydetail';
 import UserService from "../../services/user.service";
 
-function Partylist() {
+function Partylist(props) {
   const [partyName, setPartyName] = useState();
   const [partyObject, setpartyObject] = useState();
 
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
     setpartyObject({ party, broker });
+    props.history.push('/partydetail');
+    window.location.reload();
   };
 
   useEffect(() => {
