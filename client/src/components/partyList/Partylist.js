@@ -23,6 +23,14 @@ function Partylist(props) {
     setRedirectFlag(true);
     // window.location.reload();
   };
+  const handleClickSummary = (e, party, broker) => {
+    // console.log(party, broker)
+    props.history.push('/partylist');
+    setpartyObject({ party, broker });
+    setRedirectComp(<Redirect to={"/partysummary"} />);
+    setRedirectFlag(true);
+    // window.location.reload();
+  };
 
   useEffect(() => {
     UserService.getPartylist().then(
@@ -78,7 +86,7 @@ function Partylist(props) {
                         <Button className="btn-icon" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
                           <i className="fa fa-user"></i>
                         </Button>{` `}
-                        <Button className="btn-icon" color="success" size="sm">
+                        <Button className="btn-icon" onClick={e => handleClickSummary(e, party._id.partyName, party._id.brokerName)} color="success" size="sm">
                           <i className="fa fa-edit"></i>
                         </Button>{` `}
                       </td>
