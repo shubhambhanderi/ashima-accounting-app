@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -17,6 +17,8 @@ import Menulist from './components/menuList/Menulist';
 import Partydetail from './components/partyDetail/Partydetail';
 
 function App() {
+
+  const partyState = useState();
 
   const loggedIn = isAuthenticated();
 
@@ -40,8 +42,8 @@ function App() {
           <Header />
           <Route path="/companylist" component={Companylist} />
           <Route path="/menulist" component={Menulist} />
-          <Route path="/partylist" component={Partylist} />
-          <Route path="/partydetail" component={Partydetail} />
+          <Route path="/partylist" render={(props) => (<Partylist {...props} partyState={partyState} />)} />
+          <Route path="/partydetail" render={(props) => (<Partydetail {...props} partyState={partyState} />)} />
         </>}
     </>
   );

@@ -6,16 +6,22 @@ import {
 } from "reactstrap";
 // import Partydetail from '../partyDetail/Partydetail';
 import UserService from "../../services/user.service";
+import { Redirect } from 'react-router-dom';
 
 function Partylist(props) {
   const [partyName, setPartyName] = useState();
-  const [partyObject, setpartyObject] = useState();
+  const [partyObject, setpartyObject] = props.partyState;
+  // const [redi, setredire] = useState(null);
+  const [redirectFlag, setRedirectFlag] = useState(false);
+  const [redirectComp, setRedirectComp] = useState(null);
 
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
+    props.history.push('/partylist');
     setpartyObject({ party, broker });
-    props.history.push('/partydetail');
-    window.location.reload();
+    setRedirectComp(<Redirect to={"/partydetail"} />);
+    setRedirectFlag(true);
+    // window.location.reload();
   };
 
   useEffect(() => {
@@ -37,12 +43,14 @@ function Partylist(props) {
   }, []);
 
   return (
-    <div className="profile-page">
-      <div className="wrapper" >
-        <div style={{ height: "150px" }}>
-        </div>
-        <div style={{ minHeight: "calc(100vh - 150px)" }}>
-          {/* <img
+    <>
+      {redirectFlag && redirectComp}
+      <div className="profile-page">
+        <div className="wrapper" >
+          <div style={{ height: "150px" }}>
+          </div>
+          <div style={{ minHeight: "calc(100vh - 150px)" }}>
+            {/* <img
             alt="..."
             className="dots"
             src={require("../../assets/img/dots.png")}
@@ -52,36 +60,37 @@ function Partylist(props) {
             className="path"
             src={require("../../assets/img/path4.png")}
           /> */}
-          <Container>
-            <Table hover>
-              <thead>
-                <tr>
-                  <th className="text-center">#</th>
-                  <th>List of Parties</th>
-                  <th className="text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {partyName && partyName.map((party, index) => (
-                  <tr key={index}>
-                    <td className="text-center">{index}</td>
-                    <td>{party._id.partyName}</td>
-                    <td className="text-right">
-                      <Button className="btn-icon" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
-                        <i className="fa fa-user"></i>
-                      </Button>{` `}
-                      <Button className="btn-icon" color="success" size="sm">
-                        <i className="fa fa-edit"></i>
-                      </Button>{` `}
-                    </td>
+            <Container>
+              <Table hover>
+                <thead>
+                  <tr>
+                    <th className="text-center">#</th>
+                    <th>List of Parties</th>
+                    <th className="text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Container>
+                </thead>
+                <tbody>
+                  {partyName && partyName.map((party, index) => (
+                    <tr key={index}>
+                      <td className="text-center">{index}</td>
+                      <td>{party._id.partyName}</td>
+                      <td className="text-right">
+                        <Button className="btn-icon" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                          <i className="fa fa-user"></i>
+                        </Button>{` `}
+                        <Button className="btn-icon" color="success" size="sm">
+                          <i className="fa fa-edit"></i>
+                        </Button>{` `}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Container>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -89,8 +98,8 @@ export default Partylist
 
 
 
-// import React, { useState, useEffect } from 'react';
-// import { Container, makeStyles, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+// import React, {useState, useEffect} from 'react';
+// import {Container, makeStyles, InputLabel, MenuItem, FormControl, Select} from '@material-ui/core';
 // import Partydetail from '../partyDetail/Partydetail';
 // import UserService from "../../services/user.service";
 
