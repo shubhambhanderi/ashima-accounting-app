@@ -12,29 +12,29 @@ const styles = StyleSheet.create({
   }
 });
 
-const Pdfgenerator = () => {
+const Pdfgenerator = ({ detail }) => {
 
-  const ps = JSON.parse(localStorage.getItem('ps'));
+  // const ps = JSON.parse(localStorage.getItem('ps'));
 
-  const [detail, setDetail] = useState();
+  // const [detail, setDetail] = useState();
 
-  function fun() {
-    return userService.getPartydata(ps.party, ps.broker).then(
-      (response) => {
-        setDetail(response.data);
-        console.log("----->", response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setDetail(_content)
-      })
+  // function fun() {
+  //   return userService.getPartydata(ps.party, ps.broker).then(
+  //     (response) => {
+  //       setDetail(response.data);
+  //       console.log("----->", response.data);
+  //     },
+  //     (error) => {
+  //       const _content =
+  //         (error.response &&
+  //           error.response.data &&
+  //           error.response.data.message) ||
+  //         error.message ||
+  //         error.toString();
+  //       setDetail(_content)
+  //     })
 
-  }
+  // }
 
   // fun()
 
