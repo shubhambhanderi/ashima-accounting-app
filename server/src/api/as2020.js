@@ -46,4 +46,16 @@ router.get('/partydata/:pn/:bn', async (req, res, next) => {
   }
 })
 
+//get party data
+router.get('/partydata/', async (req, res, next) => {
+  try {
+    // console.log(req.params);
+    const { pn, bn } = req.params;
+    const items = await REPO3.find({});
+    res.json(items);
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = router;

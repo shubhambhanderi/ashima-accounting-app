@@ -11,7 +11,12 @@ const getPartydata = (partyName, brokerName) => {
   return axios.get(API_URL + `as2020/partydata/${partyName}/${brokerName}`, { headers: authHeader() });
 };
 
+const getAllPartiesdata = (partyName, brokerName) => {
+  return axios.get(API_URL + `as2020/partydata`, { headers: authHeader() });
+};
+
 export default {
   getPartylist,
   getPartydata,
+  getAllPartiesdata
 };
