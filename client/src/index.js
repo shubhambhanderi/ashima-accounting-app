@@ -7,10 +7,7 @@ import "./assets/css/nucleo-icons.css";
 import "./assets/css/blk-design-system-react.css";
 // import "./assets/demo/demo.css";
 import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  useLocation,
+  BrowserRouter as Router
 } from "react-router-dom";
 
 ReactDOM.render(
