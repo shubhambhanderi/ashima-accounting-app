@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import UserService from "../../services/user.service";
 import {
   Table,
-  Container
+  Container, Row, Button,
 } from "reactstrap";
 // import AuthService from "../../services/auth.service";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import { PDFViewer } from '@react-pdf/renderer';
+import Pdfgenerator from '../pdfGenerator/Pdfgenerator';
 
 const useStyles = makeStyles({
   root: {
@@ -25,6 +27,9 @@ function Partydetail(props) {
   }
   const [detail, setDetail] = useState();
   const ps = JSON.parse(localStorage.getItem('ps'));
+
+  const [pdfView, setpdfView] = useState(false);
+
   console.log(ps)
   useEffect(() => {
     UserService.getPartydata(ps.party, ps.broker).then(
@@ -44,6 +49,21 @@ function Partydetail(props) {
 
   }, []);
 
+  const handleClickDetail = (e, party, broker) => {
+
+  };
+
+
+  // <Route exact path="/pdf">
+  let pdfView =
+    (<div style={{ paddingTop: "80px", width: "100vw", height: "100vh" }}>
+      <PDFViewer style={{ width: "100vw", height: "100vh", zIndex: 100 }}>
+        <Pdfgenerator />
+      </PDFViewer>
+    </div>)
+
+  // </Route>
+
   return (
     <>
       {console.log(JSON.stringify(detail))}
@@ -53,7 +73,14 @@ function Partydetail(props) {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{ps.party} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{ps.broker}</h4>
+              <div>
+                <Row>
+                  <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{ps.partyName} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{ps.brokerName}</h4>
+                  <Button className="btn-icon ml-auto" onClick={e => handleClickDetail(e, ps.partyName, ps.brokerName)} color="info" size="sm">
+                    <i className="fa fa-user"></i>
+                  </Button>{` `}
+                </Row>
+              </div>
               <div className="d-md-block d-none">
                 <Table hover>
                   <thead>
