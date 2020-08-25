@@ -9,8 +9,6 @@ import "./assets/css/blk-design-system-react.css";
 import {
   BrowserRouter as Router, Route
 } from "react-router-dom";
-import Pdfgenerator from './components/pdfGenerator/Pdfgenerator';
-import { PDFViewer } from '@react-pdf/renderer';
 
 ReactDOM.render(
   <Router>
