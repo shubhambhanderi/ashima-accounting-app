@@ -155,7 +155,7 @@ function Login(props) {
                           </InputGroupAddon>
                           <Input
                             placeholder="Password"
-                            type="text"
+                            type="password"
                             value={password}
                             onChange={onChangePassword}
                             required={true}
