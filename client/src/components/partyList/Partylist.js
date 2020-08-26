@@ -7,8 +7,8 @@ import {
 // import Partydetail from '../partyDetail/Partydetail';
 import UserService from "../../services/user.service";
 import { Redirect } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
+
 
 function Partylist(props) {
   const [partyName, setPartyName] = useState();
@@ -18,14 +18,6 @@ function Partylist(props) {
   const [redirectFlag, setRedirectFlag] = useState(false);
   const [redirectComp, setRedirectComp] = useState(null);
 
-  // const handleClickSummary = (e, party, broker) => {
-  //   // console.log(party, broker)
-  //   props.history.push('/partylist');
-  //   setpartyObject({ party, broker });
-  //   setRedirectComp(<Redirect to={"/partysummary"} />);
-  //   setRedirectFlag(true);
-  //   // window.location.reload();
-  // };
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
     props.history.push('/partylist');
@@ -34,25 +26,6 @@ function Partylist(props) {
     setRedirectFlag(true);
     // window.location.reload();
   };
-
-  function printDocument() {
-    const input = document.getElementById('pdfdiv');
-    html2canvas(input)
-      .then((canvas) => {
-        let imgWidth = 180;
-        let pageHeight = 290;
-        let imgHeight = canvas.height * imgWidth / canvas.width;
-        let heightLeft = imgHeight;
-        const imgData = canvas.toDataURL('image/png', 1.0);
-        const pdf = new jsPDF('p', 'mm', 'a4')
-        let position = 10;
-        // let heightLeft = imgHeight;
-        pdf.setFillColor(23, 25, 65);
-        pdf.rect(0, 0, 210, 300, "F");
-        pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
-        pdf.save("download.pdf");
-      });
-  }
 
   useEffect(() => {
     UserService.getPartylist().then(
@@ -90,7 +63,17 @@ function Partylist(props) {
         setParties(_content);
       }
     );
-  }, [])
+  }, []);
+
+  function createAndDownloadPDF(partyName, brokerName) {
+    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName))
+    UserService.createPDFplist(postRequestData, partyName, brokerName)
+      .then(() => UserService.getPDFplist())
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, 'partylist.pdf');
+      })
+  }
 
   return (
     <>
@@ -109,8 +92,8 @@ function Partylist(props) {
                       <Button className="btn-icon ml-auto" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
                         <i className="fa fa-user"></i>
                       </Button>{` `}
-                      <Button className="btn-icon ml-5" onClick={e => printDocument()} color="info" size="sm">
-                        <i className="fa fa-user"></i>
+                      <Button className="btn-icon ml-5" onClick={e => createAndDownloadPDF(party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                        <i className="fa fa-edit"></i>
                       </Button>{` `}
                     </Row>
                   </div>

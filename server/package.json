@@ -20,13 +20,16 @@
     "@hapi/joi": "^17.1.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "helmet": "^3.23.3",
+    "html-pdf": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.0",
     "monk": "^7.3.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "phantomjs-prebuilt": "^2.1.13"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
