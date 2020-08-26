@@ -25,7 +25,7 @@ router.post('/create-pdf', (req, res) => {
     } else {
       console.log(str)
     }
-    pdf.create(str).toFile('result.pdf', (err) => {
+    pdf.create(str).toFile('./src/api/assets/result.pdf', (err) => {
       console.log('babu')
       if (err) {
         res.send(err);
@@ -38,7 +38,7 @@ router.post('/create-pdf', (req, res) => {
 
 //GET - send the generated pdf to client (partydetail)
 router.get('/fetch-pdf', (req, res) => {
-  res.sendFile('D:/Shubham/Personal Projects/Manavs Projects/ashima_accounting_app/server/result.pdf')
+  res.sendFile(`${__dirname}/assets/result.pdf`)
 })
 
 //POST - pdf generation and fetching of data of particular party (partylist)
@@ -51,7 +51,7 @@ router.post('/create-pdf-s', (req, res) => {
     } else {
       console.log(str)
     }
-    pdf.create(str).toFile('result-s.pdf', (err) => {
+    pdf.create(str).toFile('./src/api/assets/result-s.pdf', (err) => {
       console.log('babu')
       if (err) {
         res.send(err);
@@ -64,7 +64,7 @@ router.post('/create-pdf-s', (req, res) => {
 
 //GET - send the generated pdf to client (partylist)
 router.get('/fetch-pdf-s', (req, res) => {
-  res.sendFile('D:/Shubham/Personal Projects/Manavs Projects/ashima_accounting_app/server/result-s.pdf')
+  res.sendFile(`${__dirname}/assets/result-s.pdf`)
 })
 
 //get list of parties

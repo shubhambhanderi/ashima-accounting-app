@@ -5,11 +5,14 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+
 const middlewares = require('./middlewares');
 const api = require('./api');
 
 const app = express();
+console.log(__dirname)
 
+app.use(express.static(__dirname + "\\assets"))
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
