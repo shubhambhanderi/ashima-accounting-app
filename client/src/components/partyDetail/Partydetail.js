@@ -7,6 +7,7 @@ import {
 import { saveAs } from 'file-saver';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import htmlStr from '../htmlStringGenerator/htmlStr';
 
 const useStyles = makeStyles({
   root: {
@@ -42,12 +43,15 @@ function Partydetail(props) {
   }, []);
 
   function createAndDownloadPDF() {
-    UserService.createPDFdetail(detail, ps.party, ps.broker)
-      .then(() => UserService.getPDFdetail())
+    let str = htmlStr(detail, ps.party, ps.broker);
+    console.log(str)
+    UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
-        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        saveAs(pdfBlob, 'partydetail.pdf');
+        console.log("success", res)
       })
+      .catch((err) =>
+        console.log(err)
+      )
   }
 
   return (
