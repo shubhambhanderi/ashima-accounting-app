@@ -44,10 +44,11 @@ function Partydetail(props) {
 
   function createAndDownloadPDF() {
     let str = htmlStr(detail, ps.party, ps.broker);
-    console.log(str)
     UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
-        console.log("success", res)
+        console.log("success", res.data);
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, 'new.pdf');
       })
       .catch((err) =>
         console.log(err)

@@ -7,6 +7,7 @@ import {
 // import Partydetail from '../partyDetail/Partydetail';
 import UserService from "../../services/user.service";
 import { Redirect } from 'react-router-dom';
+import htmlStrPartylist from '../htmlStringGenerator/htmlStrPartylist';
 import { saveAs } from 'file-saver';
 
 
@@ -66,13 +67,17 @@ function Partylist(props) {
   }, []);
 
   function createAndDownloadPDF(partyName, brokerName) {
-    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName))
-    UserService.createPDFplist(postRequestData, partyName, brokerName)
-      .then(() => UserService.getPDFplist())
+    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName));
+    const str = htmlStrPartylist(postRequestData, partyName, brokerName);
+    UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
+        console.log("success", res.data);
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        saveAs(pdfBlob, 'partylist.pdf');
+        saveAs(pdfBlob, 'new.pdf');
       })
+      .catch((err) =>
+        console.log(err)
+      )
   }
 
   return (

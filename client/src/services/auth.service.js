@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/auth/";
+const API_URL = "https://ashima-accounting-node.herokuapp.com/auth/";
 
 const register = (firstname, lastname, username, password) => {
   return axios.post(API_URL + "signup", {
