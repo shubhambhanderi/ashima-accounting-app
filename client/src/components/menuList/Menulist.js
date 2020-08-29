@@ -78,7 +78,7 @@ class Menulist extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": this.state.pills === 1
+                          "active show": 1
                         })}
                         onClick={e => this.toggleTabsPurchase(e, "pills", 1)}
                         href="#pablo"
@@ -90,7 +90,7 @@ class Menulist extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": this.state.pills === 2
+                          "active show": 1
                         })}
                         onClick={e => this.toggleTabsSales(e, "pills", 2)}
                         href="#pablo"

@@ -78,7 +78,7 @@ class Companylist extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": this.state.pills === 1
+                          "active show": 1
                         })}
                         onClick={e => this.toggleTabsAshima(e, "pills", 1)}
                         href="#pablo"
@@ -90,7 +90,7 @@ class Companylist extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": this.state.pills === 2
+                          "active show": 1
                         })}
                         onClick={e => this.toggleTabsSSF(e, "pills", 2)}
                         href="#pablo"
