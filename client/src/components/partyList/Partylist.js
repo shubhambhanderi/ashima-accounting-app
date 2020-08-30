@@ -9,9 +9,11 @@ import UserService from "../../services/user.service";
 import { Redirect } from 'react-router-dom';
 import htmlStrPartylist from '../htmlStringGenerator/htmlStrPartylist';
 import { saveAs } from 'file-saver';
+import { useSnackbar } from 'notistack';
 
 
 function Partylist(props) {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [partyName, setPartyName] = useState();
   const [parties, setParties] = useState();
   const [partyObject, setpartyObject] = props.partyState;
@@ -50,7 +52,7 @@ function Partylist(props) {
   useEffect(() => {
     UserService.getAllPartiesdata().then(
       (response) => {
-        console.log("--->", JSON.stringify(response.data))
+        // console.log("--->", JSON.stringify(response.data))
         setParties(response.data);
       },
       (error) => {
@@ -69,14 +71,37 @@ function Partylist(props) {
   function createAndDownloadPDF(partyName, brokerName) {
     const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName));
     const str = htmlStrPartylist(postRequestData, partyName, brokerName);
+    enqueueSnackbar("PDF Generation in progress...", {
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'left',
+      },
+      variant: 'success',
+    });
     UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
-        console.log("success", res.data);
+        // console.log("success", res.data);
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, 'new.pdf');
+        closeSnackbar();
       })
-      .catch((err) =>
-        console.log(err)
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        enqueueSnackbar(resMessage, {
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          variant: 'error',
+        });
+        console.log(error);
+      }
       )
   }
 
@@ -98,7 +123,7 @@ function Partylist(props) {
                         <i className="fa fa-user"></i>
                       </Button>{` `}
                       <Button className="btn-icon ml-5" onClick={e => createAndDownloadPDF(party._id.partyName, party._id.brokerName)} color="info" size="sm">
-                        <i className="fa fa-edit"></i>
+                        <i className="tim-icons icon-paper"></i>
                       </Button>{` `}
                     </Row>
                   </div>

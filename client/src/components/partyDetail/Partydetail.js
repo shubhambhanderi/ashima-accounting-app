@@ -8,15 +8,17 @@ import { saveAs } from 'file-saver';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import htmlStr from '../htmlStringGenerator/htmlStr';
+import { useSnackbar } from 'notistack';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 275,
     background: 'transparent !important'
   },
-});
+}));
 
 function Partydetail(props) {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
   const [partyObject, setpartyObject] = props.partyState;
 
@@ -44,15 +46,37 @@ function Partydetail(props) {
 
   function createAndDownloadPDF() {
     let str = htmlStr(detail, ps.party, ps.broker);
+    enqueueSnackbar("PDF Generation in progress...", {
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'left',
+      },
+      variant: 'success',
+    });
     UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
-        console.log("success", res.data);
+        // console.log("success", res.data);
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, 'new.pdf');
+        closeSnackbar();
       })
-      .catch((err) =>
-        console.log(err)
-      )
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        enqueueSnackbar(resMessage, {
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          variant: 'error',
+        });
+        console.log(resMessage);
+      })
   }
 
   return (
@@ -66,7 +90,7 @@ function Partydetail(props) {
               <Row>
                 <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{ps.party} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{ps.broker}</h4>
                 <Button className="btn-icon ml-auto" onClick={() => createAndDownloadPDF()} color="info" size="sm">
-                  <i className="fa fa-edit"></i>
+                  <i className="tim-icons icon-paper"></i>
                 </Button>{` `}
               </Row>
               <div className="d-md-block d-none">
@@ -82,9 +106,10 @@ function Partydetail(props) {
                       <th className="text-center">Supply Date</th>
                       <th className="text-center">BL/CH No.</th>
                       <th className="text-center">Supply Quan.</th>
+                      <th className="text-center">Balance Quan</th>
                       <th className="text-center">No. Taka</th>
                       <th className="text-center">Supply Rate</th>
-                      <th className="text-center">Balance Quan</th>
+                      <th className="text-center">L.R.No</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -112,6 +137,7 @@ function Partydetail(props) {
                             <p>{detail.TQNTY}</p>
                           ))}<b style={{ color: "hotpink" }}>{data.supplyQuantity}</b>
                         </td>
+                        <td className="text-center"><b style={{ color: 'hotpink' }}>{data.balanceQuantity}</b></td>
                         <td className="text-center">
                           {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
                             <p>{detail.TBOX}</p>
@@ -123,7 +149,11 @@ function Partydetail(props) {
                             <p>{detail.CRATE}</p>
                           ))}
                         </td>
-                        <td className="text-center"><b style={{ color: 'hotpink' }}>{data.balanceQuantity}</b></td>
+                        <td className="text-center">
+                          {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
+                            <p>{detail.LRNO}</p>
+                          ))}
+                        </td>
                       </tr>
                     ))
                     }

@@ -6,13 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/blk-design-system-react.css";
 // import "./assets/demo/demo.css";
+import { SnackbarProvider } from 'notistack';
 import {
   BrowserRouter as Router, Route
 } from "react-router-dom";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <SnackbarProvider>
+      <App />
+    </SnackbarProvider>
   </Router>,
   document.getElementById('root')
 );
