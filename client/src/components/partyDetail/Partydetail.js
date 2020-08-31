@@ -79,6 +79,10 @@ function Partydetail(props) {
       })
   }
 
+  function dateToStr(e) {
+    return e?.getDate() + "/" + e?.getMonth() + "/" + e?.getFullYear()
+  }
+
   return (
     <>
       <div className="profile-page">
@@ -102,14 +106,13 @@ function Partydetail(props) {
                       <th className="text-center">Q Code</th>
                       <th className="text-center">Ord. No</th>
                       <th className="text-center">Ord. Quantity</th>
-                      {/* <th className="text-center">Ord. Rate</th> */}
                       <th className="text-center">Supply Date</th>
                       <th className="text-center">BL/CH No.</th>
+                      <th className="text-center">L.R.No</th>
                       <th className="text-center">Supply Quan.</th>
                       <th className="text-center">Balance Quan</th>
                       <th className="text-center">No. Taka</th>
                       <th className="text-center">Supply Rate</th>
-                      <th className="text-center">L.R.No</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -117,20 +120,25 @@ function Partydetail(props) {
                       <tr key={index} >
                         <td>{index + 1}</td>
                         {/* {console.log(data)} */}
-                        <td className="text-center">{data.orderDate.toString().slice(0, 10)}</td>
+                        <td className="text-center">{dateToStr(new Date(data.orderDate))}</td>
                         <td className="text-center">{data.itemName}</td> {/** QCode */}
                         <td className="text-center">{data.orderNo}</td> {/** Order no. */}
                         <td className="text-center">{data.orderQuantity}</td> {/** order qnty*/}
                         {/* <td className="text-center">{data.orderRate}</td> */}
                         <td className="text-center">
                           {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
-                            <p>{detail.DATE.toString().slice(0, 10)}</p>
+                            <p>{dateToStr(new Date(detail.DATE))}</p>
                           ))}
                         </td>
                         <td className="text-center">
                           {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
                             <p>{detail.NO}</p>
-                          ))}<b style={{ color: 'hotpink' }}>{data?.FCHDetails?.map((e) => e.NO)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</b>
+                          ))}
+                        </td>
+                        <td className="text-center">
+                          {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
+                            <p>{detail.LRNO}</p>
+                          ))}
                         </td>
                         <td className="text-center" >
                           {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
@@ -147,11 +155,6 @@ function Partydetail(props) {
                         <td className="text-center">
                           {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
                             <p>{detail.CRATE}</p>
-                          ))}
-                        </td>
-                        <td className="text-center">
-                          {data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
-                            <p>{detail.LRNO}</p>
                           ))}
                         </td>
                       </tr>

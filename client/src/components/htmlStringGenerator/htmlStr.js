@@ -1,5 +1,9 @@
 import React from 'react'
 
+function dateToStr(e) {
+  return e?.getDate() + "/" + e?.getMonth() + "/" + e?.getFullYear()
+}
+
 
 export default function htmlStr(detail, partyname, brokername) {
   return (
@@ -30,7 +34,6 @@ export default function htmlStr(detail, partyname, brokername) {
                      }
                    </style>
                    <body>
-
                    <div>
                    <center>
                                         <h1>ASHIMA FABRICS</h1>
@@ -69,35 +72,42 @@ export default function htmlStr(detail, partyname, brokername) {
                                               <td>Ord. No</td>
                                               <td>Ord. Quantity</td>
                                               <td>Supply Date</td>
-                                              <td>BL/Cd No.</td>
+                                              <td>BL/CH No.</td>
+                                              <td>L.R.NO</td>
                                               <td>Supply Quan.</td>
+                                              <td>Balance Quan</td>
                                               <td>No. Taka</td>
                                               <td>Supply Rate</td>
-                                              <td>Balance Quan</td>
                                               </tr>
                      <tbody>
                      ${detail && detail.map((data, index) => (
       ` <tr key=${index} >
                              <td>${index + 1}</td>
-                           <td> ${ data.orderDate.toString().slice(0, 10)}</td >
+                           <td> ${ dateToStr(new Date(data.orderDate))}</td >
                          <td>${data.itemName}</td>
                          <td>${data.orderNo}</td>
                          <td>${data.orderQuantity}</td>
                          <td>
                          ${data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
-        `<p>${detail.DATE.toString().slice(0, 10)}</p>`
+        `<p>${dateToStr(new Date(detail.DATE))}</p>`
       ))}
                          </td>
                          <td>
                          ${data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
         ` <p>${detail.NO}</p>`
-      ))}<b>${data?.FCHDetails?.map((e) => e.NO)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</b>
+      ))}
+                         </td>
+                         <td>
+                          ${data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
+        `<p>${detail.LRNO}</p>`
+      ))}
                          </td>
                          <td>
                          ${data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
         `<p>${detail.TQNTY}</p>`
       ))}<b>${data.supplyQuantity}</b>
                          </td>
+                         <td><b>${data.balanceQuantity}</b></td>
                          <td>
                          ${data && data.FCHDetails && data.FCHDetails.map((detail, index) => (
         `<p>${detail.TBOX}</p>`
@@ -109,7 +119,7 @@ export default function htmlStr(detail, partyname, brokername) {
         `<p>${detail.CRATE}</p>`
       ))}
                          </td>
-                         <td><b>${data.balanceQuantity}</b></td>
+
                            </tr >`
     ))
     }

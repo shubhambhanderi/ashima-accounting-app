@@ -105,6 +105,10 @@ function Partylist(props) {
       )
   }
 
+  function dateToStr(e) {
+    return e?.getDate() + "/" + e?.getMonth() + "/" + e?.getFullYear()
+  }
+
   return (
     <>
       {redirectFlag && redirectComp}
@@ -146,7 +150,7 @@ function Partylist(props) {
                           return (
                             <tr key={key}>
                               <td className="text-center">{key}</td>
-                              <td className="text-center">{a.orderDate.toString().slice(0, 10)}</td>
+                              <td className="text-center">{dateToStr(new Date(a.orderDate))}</td>
                               <td className="text-center">{a.itemName}</td>
                               <td className="text-center">{a.orderNo}</td>
                               <td className="text-center">{a.orderQuantity}</td>

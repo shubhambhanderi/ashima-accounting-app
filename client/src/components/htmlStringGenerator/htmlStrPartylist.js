@@ -1,5 +1,8 @@
 import React from 'react'
 
+function dateToStr(e) {
+  return e?.getDate() + "/" + e?.getMonth() + "/" + e?.getFullYear()
+}
 
 export default function htmlStrPartylist(detail, partyname, brokername) {
   return (
@@ -76,7 +79,7 @@ export default function htmlStrPartylist(detail, partyname, brokername) {
                      ${detail && detail.map((data, index) => (
       ` <tr key=${index} >
                          <td>${index + 1}</td>
-                         <td> ${ data.orderDate.toString().slice(0, 10)}</td >
+                         <td> ${ dateToStr(new Date(data.orderDate))}</td >
                          <td>${data.itemName}</td>
                          <td>${data.orderNo}</td>
                          <td>${data.orderQuantity}</td>
