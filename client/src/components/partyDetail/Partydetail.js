@@ -80,7 +80,7 @@ function Partydetail(props) {
   }
 
   function dateToStr(e) {
-    return e?.getDate() + "/" + e?.getMonth() + "/" + e?.getFullYear()
+    return e?.getDate() + "/" + (e?.getMonth() + 1) + "/" + e?.getFullYear()
   }
 
   return (
