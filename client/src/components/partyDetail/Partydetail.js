@@ -97,8 +97,8 @@ function Partydetail(props) {
                   <i className="tim-icons icon-paper"></i>
                 </Button>{` `}
               </Row>
-              <div className="d-md-block d-none">
-                <Table hover>
+              <div>
+                <Table responsive>
                   <thead>
                     <tr>
                       <th>#</th>
@@ -163,7 +163,7 @@ function Partydetail(props) {
                   </tbody>
                 </Table>
               </div>
-              <div className="d-block d-md-none">
+              {/* <div className="d-block d-md-none">
                 {detail && detail.map((data, index) => (
                   <Card className={classes.root} style={{ paddingTop: '20px' }} variant="outlined">
                     <Table hover>
@@ -193,9 +193,6 @@ function Partydetail(props) {
                           <td className="text-center">Ord. Quantity</td>
                           <td className="text-center">{data.orderQuantity}</td>
                         </tr>
-                        {/* <tr>
-                          <td className="text-center">Ord. Rate</td>
-                        </tr> */}
                         <tr>
                           <td className="text-center">Supply Date</td>
                           <td className="text-center">
@@ -243,7 +240,7 @@ function Partydetail(props) {
                     </Table>
                   </Card>
                 ))}
-              </div>
+              </div> */}
             </Container>
           </div>
         </div>

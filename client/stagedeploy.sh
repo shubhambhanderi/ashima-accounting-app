@@ -1,8 +1,8 @@
-yarn run build
+npm run build
 
 cd build
-git init .
+git init
 git add .
 git commit -m "build"
-git remote add origin https://github.com/dhananiraj/dhananiraj.github.io.git
+git remote add origin https://github.com/shubhambhanderi/ashima-accounting-build.git
 git push -f origin master
