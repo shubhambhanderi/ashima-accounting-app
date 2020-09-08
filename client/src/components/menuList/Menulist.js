@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import './Menulist.css'
 // javascript plugin used to create scrollbars on windows
 // import PerfectScrollbar from "perfect-scrollbar";
 // reactstrap components
@@ -40,13 +41,13 @@ class Menulist extends React.Component {
     }
     document.body.classList.toggle("profile-page");
   }
-  toggleTabsPurchase = (e, stateName, index) => {
+  toggleTabsDailyReport = (e, stateName, index) => {
     e.preventDefault();
     this.setState({
       [stateName]: index
     });
-    // this.props.history.push("/partylist");
-    // window.location.reload();
+    this.props.history.push("/dailyreport");
+    window.location.reload();
   };
   toggleTabsSales = (e, stateName, index) => {
     e.preventDefault();
@@ -80,11 +81,11 @@ class Menulist extends React.Component {
                         className={classnames({
                           "active show": 1
                         })}
-                        onClick={e => this.toggleTabsPurchase(e, "pills", 1)}
+                        onClick={e => this.toggleTabsDailyReport(e, "pills", 1)}
                         href="#pablo"
                       >
-                        <i className="tim-icons icon-cart" />
-                    Purchase Order
+                        <i className="tim-icons icon-notes" />
+                    Daily Report
                   </NavLink>
                     </NavItem>
                     <NavItem>
@@ -97,6 +98,30 @@ class Menulist extends React.Component {
                       >
                         <i className="tim-icons icon-paper" />
                     Sales Order
+                  </NavLink>
+                    </NavItem>
+                    <NavItem >
+                      <NavLink
+                        className={classnames({
+                          "active show": 1
+                        })}
+                        // onClick={e => this.toggleTabsDailyReport(e, "pills", 1)}
+                        href="#pablo"
+                      >
+                        <i className="tim-icons icon-chart-bar-32" />
+                    Stock Report
+                  </NavLink>
+                    </NavItem>
+                    <NavItem >
+                      <NavLink
+                        className={classnames({
+                          "active show": 1
+                        })}
+                        // onClick={e => this.toggleTabsDailyReport(e, "pills", 1)}
+                        href="#pablo"
+                      >
+                        <i className="tim-icons icon-cart" />
+                    BEAM Stock
                   </NavLink>
                     </NavItem>
                   </Nav>

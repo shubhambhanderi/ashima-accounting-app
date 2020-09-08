@@ -14,6 +14,7 @@ import Header from './components/header/Header';
 import Companylist from './components/companyList/Companylist';
 import Menulist from './components/menuList/Menulist';
 import Partydetail from './components/partyDetail/Partydetail';
+import Dailyreport from './components/dailyReport/Dailyreport';
 // import Partysummary from './components/partySummary/Partysummary';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/partylist" render={(props) => (<Partylist {...props} partyState={partyState} />)} />
           {/* <Route path="/partysummary" render={(props) => (<Partysummary {...props} partyState={partyState} />)} /> */}
           <Route path="/partydetail" render={(props) => (<Partydetail {...props} partyState={partyState} />)} />
+          <Route path="/dailyreport" component={Dailyreport} />
         </>}
     </>
   );

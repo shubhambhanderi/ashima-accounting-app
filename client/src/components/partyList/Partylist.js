@@ -119,7 +119,7 @@ function Partylist(props) {
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
               {partyName && partyName.map((party, index) => (
-                <div className="pt-5" style={{ backgroundColor: "#171941" }} id="pdfdiv">
+                <div className="pt-5" id="pdfdiv">
                   <div>
                     <Row>
                       <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{party._id.partyName} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{party._id.brokerName}</h4>

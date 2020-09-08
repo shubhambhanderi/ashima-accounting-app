@@ -6,7 +6,7 @@ import {
 } from "reactstrap";
 import { saveAs } from 'file-saver';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
 import htmlStr from '../htmlStringGenerator/htmlStr';
 import { useSnackbar } from 'notistack';
 
@@ -53,6 +53,7 @@ function Partydetail(props) {
       },
       variant: 'success',
     });
+
     UserService.pythonPDFSerivce({ data: str })
       .then((res) => {
         // console.log("success", res.data);

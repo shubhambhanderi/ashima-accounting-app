@@ -17,8 +17,11 @@ const getAllPartiesdata = (partyName, brokerName) => {
 };
 
 const pythonPDFSerivce = (data) => {
-
   return axios.post(API_uri, data, { responseType: 'blob' });
+};
+
+const getDailyReport = () => {
+  return axios.get(`http://localhost:5000/api/as2020/dailyreport`, { headers: authHeader() });
 }
 
 export default {
@@ -26,4 +29,5 @@ export default {
   getPartydata,
   getAllPartiesdata,
   pythonPDFSerivce,
+  getDailyReport
 };
