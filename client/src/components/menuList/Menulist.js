@@ -1,6 +1,5 @@
 import React from "react";
 import classnames from "classnames";
-import './Menulist.css'
 // javascript plugin used to create scrollbars on windows
 // import PerfectScrollbar from "perfect-scrollbar";
 // reactstrap components

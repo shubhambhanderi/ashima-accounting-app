@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UserService from "../../services/user.service";
 import {
   Table,
-  Container, Row, Button,
+  Container,
 } from "reactstrap";
 
 function Dailyreport() {
@@ -11,7 +11,6 @@ function Dailyreport() {
   useEffect(() => {
     UserService.getDailyReport().then(
       (response) => {
-        console.log("--->", response.data)
         setDetail(response.data);
       },
       (error) => {
