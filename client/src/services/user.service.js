@@ -21,7 +21,7 @@ const pythonPDFSerivce = (data) => {
 };
 
 const getDailyReport = () => {
-  return axios.get(`http://localhost:5000/api/as2020/dailyreport`, { headers: authHeader() });
+  return axios.get(API_URL, `/as2020/dailyreport`, { headers: authHeader() });
 }
 
 export default {
