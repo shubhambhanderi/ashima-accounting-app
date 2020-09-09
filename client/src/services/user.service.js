@@ -24,10 +24,16 @@ const getDailyReport = () => {
   return axios.get(API_URL + "as2020/dailyreport", { headers: authHeader() });
 }
 
+const getBeamStock = () => {
+  return axios.get(API_URL + "as2020/beamstock", { headers: authHeader() });
+}
+
+
 export default {
   getPartylist,
   getPartydata,
   getAllPartiesdata,
   pythonPDFSerivce,
-  getDailyReport
+  getDailyReport,
+  getBeamStock
 };

@@ -2,11 +2,22 @@ import React, { useState, useEffect } from 'react'
 import UserService from "../../services/user.service";
 import {
   Table,
-  Container,
+  Container, Card
 } from "reactstrap";
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: 275,
+    background: 'transparent !important'
+  },
+}));
 
 function Dailyreport() {
   const [detail, setDetail] = useState();
+  const [counter, setCounter] = useState(0);
+  const classes = useStyles();
 
   useEffect(() => {
     UserService.getDailyReport().then(
@@ -32,13 +43,14 @@ function Dailyreport() {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <div>
+              <div className="d-none d-md-block">
                 <Table responsive>
                   <thead>
                     <tr>
                       <th>#</th>
                       <th className="text-center">Quality Code</th>
                       <th className="text-center">Machine No.</th>
+                      <th className="text-center">Total Machine</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -51,11 +63,44 @@ function Dailyreport() {
                             <p>{detail}</p>
                           ))}
                         </td>
+                        <td className="text-center">
+                          {counter}
+                        </td>
                       </tr>
                     ))
                     }
                   </tbody>
                 </Table>
+              </div>
+              <div className="d-block d-md-none">
+                {detail && detail.map((data, index) => (
+                  <Card className={classes.root} style={{ paddingTop: '20px' }} variant="outlined">
+                    <Table hover>
+                      <thead>
+                        <th className="text-center" style={{ color: "white", backgroundColor: "hotpink" }}>Attributes</th>
+                        <th className="text-center" style={{ color: "white", backgroundColor: "hotpink" }}>Values</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="text-center">#</td>
+                          <td className="text-center">{index + 1}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">Quality Code</td>
+                          <td className="text-center">{data.key}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">Machine No.</td>
+                          <td className="text-center">
+                            {data && data.value && data.value.map((detail, index) => (
+                              <p>{detail}</p>
+                            ))}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Card>
+                ))}
               </div>
             </Container>
           </div>
