@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-
-const API_URL = "https://ashima-accounting-node.herokuapp.com/api/";
+//s://ashima-accounting-node.herokuapp.com
+const API_URL = "http://localhost:5000/api/";
 const API_uri = "https://temp-testing-app.herokuapp.com/";
 
 const getPartylist = () => {

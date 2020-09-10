@@ -10,16 +10,20 @@ import { Redirect } from 'react-router-dom';
 import htmlStrPartylist from '../htmlStringGenerator/htmlStrPartylist';
 import { saveAs } from 'file-saver';
 import { useSnackbar } from 'notistack';
+import Switch from '@material-ui/core/Switch';
 
 
 function Partylist(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [partyName, setPartyName] = useState();
+  const [OYN, setOYN] = useState("N");
   const [parties, setParties] = useState();
   const [partyObject, setpartyObject] = props.partyState;
   // const [redi, setredire] = useState(null);
   const [redirectFlag, setRedirectFlag] = useState(false);
   const [redirectComp, setRedirectComp] = useState(null);
+  const [OYNTrue, setOYNTrue] = useState(false);
+  const [search, setSearch] = useState("");
 
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
@@ -33,7 +37,7 @@ function Partylist(props) {
   useEffect(() => {
     UserService.getPartylist().then(
       (response) => {
-        // console.log(JSON.stringify(response.data))
+        console.log(JSON.stringify(response.data))
         setPartyName(response.data);
       },
       (error) => {
@@ -109,6 +113,11 @@ function Partylist(props) {
     return e?.getDate() + "/" + (e?.getMonth() + 1) + "/" + e?.getFullYear()
   }
 
+  const handleChange = (event) => {
+    setOYNTrue(event.target.checked);
+    setOYN(event.target.checked ? 'Y' : 'N')
+  };
+
   return (
     <>
       {redirectFlag && redirectComp}
@@ -118,7 +127,21 @@ function Partylist(props) {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              {partyName && partyName.map((party, index) => (
+              <div>
+                <label for="search" style={{ fontWeight: "bold", color: "white" }}>Search : </label>
+                <input id="search" type="text" style={{ width: "100%" }} onChange={e => setSearch(e.target.value.toString().toLowerCase())} />
+              </div>
+              <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
+                {OYNTrue ? "Complete" : "Incomplete"}
+
+                <Switch
+                  // checked={state.checkedA}
+                  onChange={handleChange}
+                  name="checkedA"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
+              </div>
+              {partyName && partyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).filter((e, i) => (e._id.OYN === OYN)).map((party, index) => (
                 <div className="pt-5" id="pdfdiv">
                   <div>
                     <Row>
@@ -145,7 +168,7 @@ function Partylist(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {parties && parties.map((a, key) => {
+                      {parties && parties.filter((e, i) => (e.OYN === OYN)).map((a, key) => {
                         if (a.partyName === party._id.partyName && a.brokerName === party._id.brokerName) {
                           return (
                             <tr key={key}>
