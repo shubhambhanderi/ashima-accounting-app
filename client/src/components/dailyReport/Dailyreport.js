@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Dailyreport() {
   const [detail, setDetail] = useState();
-  const [counter, setCounter] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
     UserService.getDailyReport().then(
       (response) => {
+        console.log("--->", response.data)
         setDetail(response.data);
       },
       (error) => {
@@ -43,36 +43,36 @@ function Dailyreport() {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <div className="d-none d-md-block">
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th className="text-center">Quality Code</th>
-                      <th className="text-center">Machine No.</th>
-                      <th className="text-center">Total Machine</th>
+              {/* <div className="d-none d-md-block"> */}
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th className="text-center">Quality Code</th>
+                    <th className="text-center">Machine No.</th>
+                    <th className="text-center">Total Machine</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail && detail.map((data, index) => (
+                    <tr key={index} >
+                      <td>{index + 1}</td>
+                      <td className="text-center">{data.key}</td>
+                      <td className="text-center" style={{ width: '100px' }}>
+                        {data && data.value && data.value.map((detail, index) => (
+                          <span> {detail},</span>
+                        ))}
+                      </td>
+                      <td className="text-center">
+                        {data && data.value.length}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {detail && detail.map((data, index) => (
-                      <tr key={index} >
-                        <td>{index + 1}</td>
-                        <td className="text-center">{data.key}</td>
-                        <td className="text-center">
-                          {data && data.value && data.value.map((detail, index) => (
-                            <p>{detail}</p>
-                          ))}
-                        </td>
-                        <td className="text-center">
-                          {counter}
-                        </td>
-                      </tr>
-                    ))
-                    }
-                  </tbody>
-                </Table>
-              </div>
-              <div className="d-block d-md-none">
+                  ))
+                  }
+                </tbody>
+              </Table>
+              {/* </div> */}
+              {/* <div className="d-block d-md-none">
                 {detail && detail.map((data, index) => (
                   <Card className={classes.root} style={{ paddingTop: '20px' }} variant="outlined">
                     <Table hover>
@@ -90,18 +90,24 @@ function Dailyreport() {
                           <td className="text-center">{data.key}</td>
                         </tr>
                         <tr>
-                          <td className="text-center">Machine No.</td>
-                          <td className="text-center">
+                          <td className="text-center" >Machine No.</td>
+                          <td className="text-center" style={{ width: '100px' }}>
                             {data && data.value && data.value.map((detail, index) => (
-                              <p>{detail}</p>
+                              <span> {detail},</span>
                             ))}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th className="text-center" style={{ color: "white", backgroundColor: "hotpink" }}>Total Machine</th>
+                          <td className="text-center">
+                            {data && data.value.length}
                           </td>
                         </tr>
                       </tbody>
                     </Table>
                   </Card>
                 ))}
-              </div>
+              </div> */}
             </Container>
           </div>
         </div>

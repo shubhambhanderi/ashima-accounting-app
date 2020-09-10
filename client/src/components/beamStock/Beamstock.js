@@ -50,7 +50,7 @@ function Beamstock() {
                     {detail && detail.map((data, index) => (
                       <tr key={index} >
                         <td>{index + 1}</td>
-                        <td className="text-center">{data.QualityCode}</td>
+                        <td className="text-center" style={{ width: '20px' }}>{data.QualityCode}</td>
                         <td className="text-center">
                           {data && data.beamStockData && data.beamStockData.map((detail, index) => (
                             <p key={index}>{detail.BeamNumber}</p>
