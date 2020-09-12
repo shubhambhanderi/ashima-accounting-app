@@ -27,6 +27,10 @@ const getBeamStock = () => {
   return axios.get(API_URL + "as2020/beamstock", { headers: authHeader() });
 }
 
+const getWorpingMeter = () => {
+  return axios.get(API_URL + "as2020/worpingmeter", { headers: authHeader() });
+}
+
 
 export default {
   getPartylist,
@@ -34,5 +38,6 @@ export default {
   getAllPartiesdata,
   pythonPDFSerivce,
   getDailyReport,
-  getBeamStock
+  getBeamStock,
+  getWorpingMeter
 };

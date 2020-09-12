@@ -64,6 +64,16 @@ class Menulist extends React.Component {
     this.props.history.push("/beamstock");
     window.location.reload();
   };
+
+  toggleTabsWorpingReport = (e, stateName, index) => {
+    e.preventDefault();
+    this.setState({
+      [stateName]: index
+    });
+    this.props.history.push("/warpingmeter");
+    window.location.reload();
+  };
+
   render() {
     return (
       <>
@@ -112,11 +122,11 @@ class Menulist extends React.Component {
                         className={classnames({
                           "active show": 1
                         })}
-                        // onClick={e => this.toggleTabsDailyReport(e, "pills", 1)}
+                        onClick={e => this.toggleTabsWorpingReport(e, "pills", 1)}
                         href="#pablo"
                       >
                         <i className="tim-icons icon-chart-bar-32" />
-                    Stock Report
+                    Warping Report
                   </NavLink>
                     </NavItem>
                     <NavItem >

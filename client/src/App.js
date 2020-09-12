@@ -16,6 +16,7 @@ import Menulist from './components/menuList/Menulist';
 import Partydetail from './components/partyDetail/Partydetail';
 import Dailyreport from './components/dailyReport/Dailyreport';
 import Beamstock from './components/beamStock/Beamstock';
+import WorpingMeter from './components/worpingMeter/WorpingMeter';
 // import Partysummary from './components/partySummary/Partysummary';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/partydetail" render={(props) => (<Partydetail {...props} partyState={partyState} />)} />
           <Route path="/dailyreport" component={Dailyreport} />
           <Route path="/beamstock" component={Beamstock} />
+          <Route path="/warpingmeter" component={WorpingMeter} />
         </>}
     </>
   );
