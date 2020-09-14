@@ -74,6 +74,15 @@ class Menulist extends React.Component {
     window.location.reload();
   };
 
+  toggleTabsStockReport = (e, stateName, index) => {
+    e.preventDefault();
+    this.setState({
+      [stateName]: index
+    });
+    this.props.history.push("/stockreport");
+    window.location.reload();
+  };
+
   render() {
     return (
       <>
@@ -139,6 +148,18 @@ class Menulist extends React.Component {
                       >
                         <i className="tim-icons icon-cart" />
                     BEAM Stock
+                  </NavLink>
+                    </NavItem>
+                    <NavItem >
+                      <NavLink
+                        className={classnames({
+                          "active show": 1
+                        })}
+                        onClick={e => this.toggleTabsStockReport(e, "pills", 1)}
+                        href="#pablo"
+                      >
+                        <i className="tim-icons icon-cart" />
+                    Stock Report
                   </NavLink>
                     </NavItem>
                   </Nav>
