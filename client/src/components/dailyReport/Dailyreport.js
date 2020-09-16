@@ -69,6 +69,12 @@ function Dailyreport() {
                     </tr>
                   ))
                   }
+                  <tr style={{ backgroundColor: "hotpink" }}>
+                    <td style={{ fontWeight: "bold" }}>Total</td>
+                    <td className="text-center"></td>
+                    <td className="text-center"></td>
+                    <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.value.length)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                  </tr>
                 </tbody>
               </Table>
               {/* </div> */}

@@ -42,7 +42,7 @@ function StockReport() {
                       <th className="text-center">Quality Code</th>
                       <th className="text-center">TAKA</th>
                       <th className="text-center">Meters</th>
-                      <th className="text-center">Weights</th>
+                      {/* <th className="text-center">Weights</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -52,7 +52,7 @@ function StockReport() {
                         <td className="text-center" >{data.qualityCode}</td>
                         <td className="text-center" >{data.taka}</td>
                         <td className="text-center" >{data.mtr}</td>
-                        <td className="text-center" >{data.wt.toFixed(3)}</td>
+                        {/* <td className="text-center" >{data.wt.toFixed(3)}</td> */}
                       </tr>
                     ))
                     }
@@ -61,7 +61,7 @@ function StockReport() {
                       <td className="text-center"></td>
                       <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.taka)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
                       <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.mtr)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
-                      <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.wt.toFixed(3))?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                      {/* <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.wt.toFixed(3))?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td> */}
                     </tr>
                   </tbody>
                 </Table>

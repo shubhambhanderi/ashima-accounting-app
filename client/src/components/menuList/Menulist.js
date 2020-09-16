@@ -158,7 +158,7 @@ class Menulist extends React.Component {
                         onClick={e => this.toggleTabsStockReport(e, "pills", 1)}
                         href="#pablo"
                       >
-                        <i className="tim-icons icon-cart" />
+                        <i className="tim-icons icon-coins" />
                     Stock Report
                   </NavLink>
                     </NavItem>
