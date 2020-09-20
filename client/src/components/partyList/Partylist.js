@@ -31,7 +31,7 @@ function Partylist(props) {
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
     props.history.push('/partylist');
-    setpartyObject({ party, broker });
+    setpartyObject({ party, broker, OYN });
     setRedirectComp(<Redirect to={"/partydetail"} />);
     setRedirectFlag(true);
     // window.location.reload();
@@ -45,8 +45,9 @@ function Partylist(props) {
 
     UserService.getPartylist().then(
       (response) => {
-        // console.log(JSON.stringify(response.data))
+        console.log("before sort", JSON.stringify(response.data))
         setPartyName(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName))));
+        console.log("after sort", JSON.stringify(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))))
       },
       (error) => {
         const _content =
@@ -64,7 +65,7 @@ function Partylist(props) {
   useEffect(() => {
     UserService.getAllPartiesdata().then(
       (response) => {
-        // console.log("--->", JSON.stringify(response.data))
+        console.log("--->", JSON.stringify(response.data))
         setParties(response.data);
       },
       (error) => {
@@ -81,7 +82,8 @@ function Partylist(props) {
   }, []);
 
   function createAndDownloadPDF(partyName, brokerName) {
-    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName));
+    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName && e.OYN === OYN));
+    console.log(postRequestData);
     const str = htmlStrPartylist(postRequestData, partyName, brokerName);
     enqueueSnackbar("PDF Generation in progress...", {
       anchorOrigin: {
