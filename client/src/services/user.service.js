@@ -35,6 +35,14 @@ const getStockReport = () => {
   return axios.get(API_URL + "as2020/stockreport", { headers: authHeader() });
 }
 
+const getReport = () => {
+  return axios.get(API_URL + "as2020/report", { headers: authHeader() });
+}
+
+const getDate = () => {
+  return axios.get(API_URL + "as2020/metadata", { headers: authHeader() });
+}
+
 
 export default {
   getPartylist,
@@ -44,5 +52,7 @@ export default {
   getDailyReport,
   getBeamStock,
   getWorpingMeter,
-  getStockReport
+  getStockReport,
+  getReport,
+  getDate
 };

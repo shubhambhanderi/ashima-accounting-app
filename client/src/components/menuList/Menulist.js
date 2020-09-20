@@ -83,6 +83,16 @@ class Menulist extends React.Component {
     window.location.reload();
   };
 
+  toggleTabsReport = (e, stateName, index) => {
+    e.preventDefault();
+    this.setState({
+      [stateName]: index
+    });
+    this.props.history.push("/report");
+    window.location.reload();
+  };
+
+
   render() {
     return (
       <>
@@ -160,6 +170,18 @@ class Menulist extends React.Component {
                       >
                         <i className="tim-icons icon-coins" />
                     Stock Report
+                  </NavLink>
+                    </NavItem>
+                    <NavItem >
+                      <NavLink
+                        className={classnames({
+                          "active show": 1
+                        })}
+                        onClick={e => this.toggleTabsReport(e, "pills", 1)}
+                        href="#pablo"
+                      >
+                        <i className="tim-icons icon-coins" />
+                    Machine Report
                   </NavLink>
                     </NavItem>
                   </Nav>

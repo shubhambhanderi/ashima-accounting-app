@@ -24,6 +24,9 @@ function Partylist(props) {
   const [redirectComp, setRedirectComp] = useState(null);
   const [OYNTrue, setOYNTrue] = useState(false);
   const [search, setSearch] = useState("");
+  const [sub1, setSub1] = useState();
+  const [sub2, setSub2] = useState();
+  const [sub3, setSub3] = useState();
 
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
@@ -35,10 +38,15 @@ function Partylist(props) {
   };
 
   useEffect(() => {
+    const date = localStorage.getItem('date');
+    setSub1(date.substring(6, 8));
+    setSub2(date.substring(8, 10));
+    setSub3(date.substring(10, 12));
+
     UserService.getPartylist().then(
       (response) => {
-        console.log(JSON.stringify(response.data))
-        setPartyName(response.data);
+        // console.log(JSON.stringify(response.data))
+        setPartyName(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName))));
       },
       (error) => {
         const _content =
@@ -127,12 +135,15 @@ function Partylist(props) {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <div>
+              <div style={{ color: "white", fontWeight: "bold" }} >
+                Backup : {sub1}-{sub2}-{sub3}
+              </div>
+              <div className="pt-5">
                 <label for="search" style={{ fontWeight: "bold", color: "white" }}>Search : </label>
                 <input id="search" type="text" style={{ width: "100%" }} onChange={e => setSearch(e.target.value.toString().toLowerCase())} />
               </div>
               <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
-                {OYNTrue ? "Complete" : "Incomplete"}
+                {OYNTrue ? "Completed" : "Pending"}
 
                 <Switch
                   // checked={state.checkedA}

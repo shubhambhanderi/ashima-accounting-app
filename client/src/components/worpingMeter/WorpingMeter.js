@@ -8,6 +8,9 @@ import {
 function WorpingMeter() {
   const [detail, setDetail] = useState();
   const [beam, setBeam] = useState()
+  const [sub1, setSub1] = useState();
+  const [sub2, setSub2] = useState();
+  const [sub3, setSub3] = useState()
 
   function getFactor(qcode) {
     if (qcode.indexOf('(') !== -1) {
@@ -24,9 +27,13 @@ function WorpingMeter() {
     return 1;
   }
 
-  getFactor('1222(12/32/12")');
 
   useEffect(() => {
+    const date = localStorage.getItem('date');
+    setSub1(date.substring(6, 8));
+    setSub2(date.substring(8, 10));
+    setSub3(date.substring(10, 12));
+
     UserService.getBeamStock().then(
       (response) => {
         var temp = {};
@@ -37,8 +44,8 @@ function WorpingMeter() {
         setBeam(temp);
         UserService.getWorpingMeter().then(
           (response) => {
-            console.log("--->", response.data)
-            setDetail(response.data);
+            // console.log("--->", response.data)
+            setDetail(response.data.sort((a, b) => (a.quality.localeCompare(b.quality))));
           },
           (error) => {
             const _content =
@@ -70,38 +77,43 @@ function WorpingMeter() {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
+              <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
+                Backup : {sub1}-{sub2}-{sub3}
+              </div>
               {/* <div className="d-none d-md-block"> */}
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th className="text-center">Quality Code</th>
-                    <th className="text-center">Order</th>
-                    <th className="text-center">onLoom</th>
-                    <th className="text-center">Stock</th>
-                    <th className="text-center">Supply Quantity</th>
-                    <th className="text-center">Beamstock</th>
-                    <th className="text-center">Warping Meter</th>
-                    <th className="text-center">Final WM</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {detail && detail.map((data, index) => (
-                    <tr key={index} >
-                      <td>{index + 1}</td>
-                      <td className="text-center">{data.quality}</td>
-                      <td className="text-center">{data.order}</td>
-                      <td className="text-center">{data.onLoom}</td>
-                      <td className="text-center">{data.stock}</td>
-                      <td className="text-center">{data.SupplyQty}</td>
-                      <td className="text-center">{beam ? beam[data.quality] : " "}</td>
-                      <td className="text-center">{Number(data.worpingMeter) - parseFloat(beam[data.quality] ? beam[data.quality] : "0")}</td>
-                      <td className="text-center">{((Number(data.worpingMeter) - parseFloat(beam[data.quality] ? beam[data.quality] : "0")) * getFactor(data.quality)).toFixed(3)}</td>
+              <div className="pt-5">
+                <Table responsive >
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th className="text-center">Quality Code</th>
+                      <th className="text-center">Order</th>
+                      <th className="text-center">onLoom</th>
+                      <th className="text-center">Stock</th>
+                      <th className="text-center">Supply Quantity</th>
+                      <th className="text-center">Beamstock</th>
+                      <th className="text-center">Warping Meter</th>
+                      <th className="text-center">Final WM</th>
                     </tr>
-                  ))
-                  }
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {detail && detail.map((data, index) => (
+                      <tr key={index} >
+                        <td>{index + 1}</td>
+                        <td className="text-center">{data.quality}</td>
+                        <td className="text-center">{data.order}</td>
+                        <td className="text-center">{data.onLoom}</td>
+                        <td className="text-center">{data.stock}</td>
+                        <td className="text-center">{data.SupplyQty}</td>
+                        <td className="text-center">{beam ? beam[data.quality] : " "}</td>
+                        <td className="text-center">{Number(data.worpingMeter) - parseFloat(beam[data.quality] ? beam[data.quality] : "0")}</td>
+                        <td className="text-center">{((Number(data.worpingMeter) - parseFloat(beam[data.quality] ? beam[data.quality] : "0")) * getFactor(data.quality)).toFixed(3)}</td>
+                      </tr>
+                    ))
+                    }
+                  </tbody>
+                </Table>
+              </div>
             </Container>
           </div>
         </div>

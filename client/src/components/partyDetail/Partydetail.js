@@ -21,6 +21,9 @@ function Partydetail(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
   const [partyObject, setpartyObject] = props.partyState;
+  const [sub1, setSub1] = useState();
+  const [sub2, setSub2] = useState();
+  const [sub3, setSub3] = useState();
 
   if (partyObject !== undefined) {
     localStorage.setItem("ps", JSON.stringify(partyObject));
@@ -29,6 +32,11 @@ function Partydetail(props) {
   const ps = JSON.parse(localStorage.getItem('ps'));
 
   useEffect(() => {
+    const date = localStorage.getItem('date');
+    setSub1(date.substring(6, 8));
+    setSub2(date.substring(8, 10));
+    setSub3(date.substring(10, 12));
+
     UserService.getPartydata(ps.party, ps.broker).then(
       (response) => {
         setDetail(response.data);
@@ -92,7 +100,10 @@ function Partydetail(props) {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <Row>
+              <div style={{ color: "white", fontWeight: "bold" }} >
+                Backup : {sub1}-{sub2}-{sub3}
+              </div>
+              <Row className="pt-5">
                 <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{ps.party} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{ps.broker}</h4>
                 <Button className="btn-icon ml-auto" onClick={() => createAndDownloadPDF()} color="info" size="sm">
                   <i className="tim-icons icon-paper"></i>

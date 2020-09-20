@@ -8,12 +8,20 @@ import {
 function Beamstock() {
 
   const [detail, setDetail] = useState();
+  const [sub1, setSub1] = useState();
+  const [sub2, setSub2] = useState();
+  const [sub3, setSub3] = useState();
 
   useEffect(() => {
+    const date = localStorage.getItem('date');
+    setSub1(date.substring(6, 8));
+    setSub2(date.substring(8, 10));
+    setSub3(date.substring(10, 12));
+
     UserService.getBeamStock().then(
       (response) => {
-        console.log(response.data)
-        setDetail(response.data);
+        // console.log(response.data)
+        setDetail(response.data.sort((a, b) => (a.QualityCode.localeCompare(b.QualityCode))));
       },
       (error) => {
         const _content =
@@ -34,7 +42,10 @@ function Beamstock() {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <div>
+              <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
+                Backup : {sub1}-{sub2}-{sub3}
+              </div>
+              <div className="pt-5">
                 <Table responsive>
                   <thead>
                     <tr>

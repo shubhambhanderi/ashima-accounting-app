@@ -4,25 +4,23 @@ import {
   Table,
   Container, Card
 } from "reactstrap";
-import { makeStyles } from '@material-ui/core/styles';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 275,
-    background: 'transparent !important'
-  },
-}));
 
 function Dailyreport() {
   const [detail, setDetail] = useState();
-  const classes = useStyles();
+  const [sub1, setSub1] = useState();
+  const [sub2, setSub2] = useState();
+  const [sub3, setSub3] = useState();
 
   useEffect(() => {
+    const date = localStorage.getItem('date');
+    setSub1(date.substring(6, 8));
+    setSub2(date.substring(8, 10));
+    setSub3(date.substring(10, 12));
+
     UserService.getDailyReport().then(
       (response) => {
-        console.log("--->", response.data)
-        setDetail(response.data);
+        // console.log("--->", response.data)
+        setDetail(response.data.sort((a, b) => (a.key.localeCompare(b.key))));
       },
       (error) => {
         const _content =
@@ -44,39 +42,44 @@ function Dailyreport() {
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
               {/* <div className="d-none d-md-block"> */}
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th className="text-center">Quality Code</th>
-                    <th className="text-center">Machine No.</th>
-                    <th className="text-center">Total Machine</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {detail && detail.map((data, index) => (
-                    <tr key={index} >
-                      <td>{index + 1}</td>
-                      <td className="text-center">{data.key}</td>
-                      <td className="text-center" style={{ width: '100px' }}>
-                        {data && data.value && data.value.map((detail, index) => (
-                          <span> {detail},</span>
-                        ))}
-                      </td>
-                      <td className="text-center">
-                        {data && data.value.length}
-                      </td>
+              <div style={{ color: "white", fontWeight: "bold" }} >
+                Backup : {sub1}-{sub2}-{sub3}
+              </div>
+              <div className="pt-5">
+                <Table responsive >
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th className="text-center">Quality Code</th>
+                      <th className="text-center">Machine No.</th>
+                      <th className="text-center">Total Machine</th>
                     </tr>
-                  ))
-                  }
-                  <tr style={{ backgroundColor: "hotpink" }}>
-                    <td style={{ fontWeight: "bold" }}>Total</td>
-                    <td className="text-center"></td>
-                    <td className="text-center"></td>
-                    <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.value.length)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
-                  </tr>
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {detail && detail.map((data, index) => (
+                      <tr key={index} >
+                        <td>{index + 1}</td>
+                        <td className="text-center">{data.key}</td>
+                        <td className="text-center" style={{ width: '100px' }}>
+                          {data && data.value && data.value.map((detail, index) => (
+                            <span> {detail},</span>
+                          ))}
+                        </td>
+                        <td className="text-center">
+                          {data && data.value.length}
+                        </td>
+                      </tr>
+                    ))
+                    }
+                    <tr style={{ backgroundColor: "hotpink" }}>
+                      <td style={{ fontWeight: "bold" }}>Total</td>
+                      <td className="text-center"></td>
+                      <td className="text-center"></td>
+                      <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.value.length)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
               {/* </div> */}
               {/* <div className="d-block d-md-none">
                 {detail && detail.map((data, index) => (

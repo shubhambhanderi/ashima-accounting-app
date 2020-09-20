@@ -48,26 +48,24 @@ function Header() {
           <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
             <strong>ASHIMA FABRICS</strong>
           </NavbarBrand>
-          <button className="navbar-toggler" id="navbarNav" type="button" onClick={toggle} onBlur={e => setIsOpen(false)}>
+          {/* <button className="navbar-toggler" id="navbarNav" type="button" onClick={toggle} onBlur={e => setIsOpen(false)}>
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
-          </button>
-          <Collapse navbar toggler="#navbarNav" isOpen={isOpen}>
-            <Nav className="ml-auto" navbar>
-              <NavItem className="active">
-                <NavLink href="#pablo" onClick={logOut}>
-                  Logout
+          </button> */}
+          {/* <Collapse navbar toggler="#navbarNav" isOpen={isOpen}> */}
+          <Nav className="ml-auto" navbar>
+            <NavItem className="active">
+              <NavLink href="#pablo" onClick={logOut}>
+                Logout
                   </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
+            </NavItem>
+          </Nav>
+          {/* </Collapse> */}
         </Container>
       </Navbar>
     </>
-
   );
 }
-
 
 export default Header;

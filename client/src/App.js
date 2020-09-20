@@ -18,6 +18,7 @@ import Dailyreport from './components/dailyReport/Dailyreport';
 import Beamstock from './components/beamStock/Beamstock';
 import WorpingMeter from './components/worpingMeter/WorpingMeter';
 import StockReport from './components/stockReport/StockReport';
+import Report from './components/report/Report';
 // import Partysummary from './components/partySummary/Partysummary';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/beamstock" component={Beamstock} />
           <Route path="/warpingmeter" component={WorpingMeter} />
           <Route path="/stockreport" component={StockReport} />
+          <Route path="/report" component={Report} />
         </>}
     </>
   );
