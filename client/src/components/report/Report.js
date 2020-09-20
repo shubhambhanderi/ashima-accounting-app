@@ -57,7 +57,7 @@ function Report() {
           </div>
           <div style={{ minHeight: "calc(100vh - 150px)" }}>
             <Container>
-              <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
+              <div style={{ color: "white", fontWeight: "bold" }}>
                 Backup : {sub1}-{sub2}-{sub3}
               </div>
               <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
