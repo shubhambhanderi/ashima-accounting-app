@@ -65,7 +65,7 @@ function Partylist(props) {
   useEffect(() => {
     UserService.getAllPartiesdata().then(
       (response) => {
-        console.log("--->", JSON.stringify(response.data))
+        // console.log("--->", JSON.stringify(response.data))
         setParties(response.data);
       },
       (error) => {
@@ -83,7 +83,7 @@ function Partylist(props) {
 
   function createAndDownloadPDF(partyName, brokerName) {
     const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName && e.OYN === OYN));
-    console.log(postRequestData);
+    // console.log(postRequestData);
     const str = htmlStrPartylist(postRequestData, partyName, brokerName);
     enqueueSnackbar("PDF Generation in progress...", {
       anchorOrigin: {

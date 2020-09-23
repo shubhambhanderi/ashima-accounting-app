@@ -7,6 +7,7 @@ import {
 
 function Dailyreport() {
   const [detail, setDetail] = useState();
+  const [search, setSearch] = useState("");
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
@@ -19,7 +20,7 @@ function Dailyreport() {
 
     UserService.getDailyReport().then(
       (response) => {
-        // console.log("--->", response.data)
+        console.log("--->", response.data)
         setDetail(response.data.sort((a, b) => (a.key.localeCompare(b.key))));
       },
       (error) => {
@@ -46,6 +47,10 @@ function Dailyreport() {
                 Backup : {sub1}-{sub2}-{sub3}
               </div>
               <div className="pt-5">
+                <label for="search" style={{ fontWeight: "bold", color: "white" }}>Search : </label>
+                <input id="search" type="text" style={{ width: "100%" }} onChange={e => setSearch(e.target.value)} />
+              </div>
+              <div className="pt-5">
                 <Table responsive >
                   <thead>
                     <tr>
@@ -56,7 +61,14 @@ function Dailyreport() {
                     </tr>
                   </thead>
                   <tbody>
-                    {detail && detail.map((data, index) => (
+                    {detail && detail.filter((e, i) => {
+                      if (search === "") {
+                        return e
+                      }
+                      else {
+                        return e.value.includes(search)
+                      }
+                    }).map((data, index) => (
                       <tr key={index} >
                         <td>{index + 1}</td>
                         <td className="text-center">{data.key}</td>
