@@ -82,8 +82,8 @@ function Report() {
                   </tr>
                 </thead>
                 <tbody>
-                  {detail && detail.map((data, index) => {
-                    if (data.fMinusP > 800) {
+                  {detail && detail.sort((a, b) => (a.mcno.localeCompare(b.mcno))).map((data, index) => {
+                    if (data.fMinusP > 1500) {
                       return (
                         <tr className="text-center">
                           <td>{index + 1}</td>
@@ -114,7 +114,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code < 69) {
+                          if (data.fMinusP < 1500 && code < 69) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -124,7 +124,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code < 69) {
+                          if (data.fMinusP < 1500 && code < 69) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -134,7 +134,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code < 69) {
+                          if (data.fMinusP < 1500 && code < 69) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -147,7 +147,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 69 && code < 73) {
+                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -157,7 +157,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 69 && code < 73) {
+                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -167,7 +167,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 69 && code < 73) {
+                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -180,7 +180,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 73 && code < 89) {
+                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -190,7 +190,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 73 && code < 89) {
+                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -200,7 +200,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 73 && code < 89) {
+                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -213,7 +213,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 89 && code < 101) {
+                          if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -223,7 +223,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 89 && code < 101) {
+                          if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -233,7 +233,7 @@ function Report() {
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 800 && code > 89 && code < 101) {
+                          if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
