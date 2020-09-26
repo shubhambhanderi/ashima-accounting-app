@@ -6,10 +6,12 @@ import {
 } from "reactstrap";
 import Switch from '@material-ui/core/Switch';
 
+const code180 = ["01", "02", "04", "24", "25", "26", "27", "28", "31", "32", "35", "36"];
+const code190 = ["05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"];
+const code230 = ["03", "06", "29", "30", "33", "34", "37", "38", "39", "40", "41", "42"];
 
 function Report() {
   const [detail, setDetail] = useState();
-  const [codes, setCodes] = useState(['180', '190', '230', '260']);
   const [OYN, setOYN] = useState(false);
   const [OYNTrue, setOYNTrue] = useState(false);
   const [sub1, setSub1] = useState();
@@ -23,7 +25,7 @@ function Report() {
     setSub3(date.substring(10, 12));
     UserService.getReport().then(
       (response) => {
-        // console.log("--->", response.data)
+        console.log("--->", response.data)
         setDetail(response.data);
       },
       (error) => {
@@ -113,8 +115,9 @@ function Report() {
                       <td className="text-center">180</td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code < 69) {
+                          // let code = getNumber(data.qualityCode);
+                          // console.log(code180.includes(data.mcno), data.mcno);
+                          if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -123,8 +126,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code < 69) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -133,8 +136,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code < 69) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -146,8 +149,8 @@ function Report() {
                       <td className="text-center">190</td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -156,8 +159,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -166,8 +169,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 69 && code < 73) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -179,8 +182,8 @@ function Report() {
                       <td className="text-center">230</td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
                               <p>{data.mcno}</p>
                             )
@@ -189,8 +192,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
                               <p>{data.qualityCode}</p>
                             )
@@ -199,8 +202,8 @@ function Report() {
                       </td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
-                          let code = getNumber(data.qualityCode);
-                          if (data.fMinusP < 1500 && code > 73 && code < 89) {
+                          // let code = getNumber(data.qualityCode);
+                          if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
                               <p>{data.fMinusP}</p>
                             )
@@ -208,7 +211,7 @@ function Report() {
                         })}
                       </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <td className="text-center">260</td>
                       <td className="text-center">
                         {detail && detail.map((data, index) => {
@@ -240,7 +243,7 @@ function Report() {
                           }
                         })}
                       </td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </Table>)}
             </Container>
