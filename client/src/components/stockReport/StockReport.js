@@ -7,7 +7,7 @@ import {
 
 function StockReport() {
 
-  const [detail, setDetail] = useState();
+  const [SRDetail, setSRDetail] = useState();
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
@@ -18,20 +18,21 @@ function StockReport() {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    UserService.getStockReport().then(
-      (response) => {
-        // console.log(response.data)
-        setDetail(response.data.sort((a, b) => (a.qualityCode.localeCompare(b.qualityCode))));
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setDetail(_content);
-      })
+    setSRDetail(JSON.parse(localStorage.getItem("SRDetail")))
+    // UserService.getStockReport().then(
+    //   (response) => {
+    //     // console.log(response.data)
+    //     setSRDetail(response.data.sort((a, b) => (a.qualityCode.localeCompare(b.qualityCode))));
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+    //     setSRDetail(_content);
+    //   });
   }, []);
 
   return (
@@ -57,7 +58,7 @@ function StockReport() {
                     </tr>
                   </thead>
                   <tbody>
-                    {detail && detail.map((data, index) => (
+                    {SRDetail && SRDetail.map((data, index) => (
                       <tr key={index} >
                         <td>{index + 1}</td>
                         <td className="text-center" >{data.qualityCode}</td>
@@ -70,8 +71,8 @@ function StockReport() {
                     <tr style={{ backgroundColor: "hotpink" }}>
                       <td style={{ fontWeight: "bold" }}>Grand Total</td>
                       <td className="text-center"></td>
-                      <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.taka)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
-                      <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.mtr)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                      <td className="text-center" style={{ fontWeight: "bold" }}>{SRDetail?.map((e) => e.taka)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                      <td className="text-center" style={{ fontWeight: "bold" }}>{SRDetail?.map((e) => e.mtr)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
                       {/* <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.wt.toFixed(3))?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td> */}
                     </tr>
                   </tbody>

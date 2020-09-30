@@ -7,7 +7,7 @@ import {
 
 function Beamstock() {
 
-  const [detail, setDetail] = useState();
+  const [BSdetail, setBSDetail] = useState();
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
@@ -18,20 +18,21 @@ function Beamstock() {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    UserService.getBeamStock().then(
-      (response) => {
-        // console.log(response.data)
-        setDetail(response.data.sort((a, b) => (a.QualityCode.localeCompare(b.QualityCode))));
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setDetail(_content);
-      })
+    setBSDetail(JSON.parse(localStorage.getItem("BSdetail")));
+    // UserService.getBeamStock().then(
+    //   (response) => {
+    //     // console.log(response.data)
+    //     setBSDetail(response.data.sort((a, b) => (a.QualityCode.localeCompare(b.QualityCode))));
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+    //     setBSDetail(_content);
+    //   })
   }, []);
 
   return (
@@ -58,7 +59,7 @@ function Beamstock() {
                     </tr>
                   </thead>
                   <tbody>
-                    {detail && detail.map((data, index) => (
+                    {BSdetail && BSdetail.map((data, index) => (
                       <tr key={index} >
                         <td>{index + 1}</td>
                         <td className="text-center" style={{ width: '20px' }}>{data.QualityCode}</td>

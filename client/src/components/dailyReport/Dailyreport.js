@@ -6,7 +6,7 @@ import {
 } from "reactstrap";
 
 function Dailyreport() {
-  const [detail, setDetail] = useState();
+  const [DRdetail, setDRdetail] = useState();
   const [search, setSearch] = useState("");
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
@@ -18,20 +18,21 @@ function Dailyreport() {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    UserService.getDailyReport().then(
-      (response) => {
-        console.log("--->", response.data)
-        setDetail(response.data.sort((a, b) => (a.key.localeCompare(b.key))));
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setDetail(_content);
-      })
+    setDRdetail(JSON.parse(localStorage.getItem("DRdetail")))
+    // UserService.getDailyReport().then(
+    //   (response) => {
+    //     // console.log("--->", response.data)
+    //     setDRdetail(response.data.sort((a, b) => (a.key.localeCompare(b.key))));
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+    //     setDRdetail(_content);
+    //   })
   }, []);
 
   return (
@@ -61,7 +62,7 @@ function Dailyreport() {
                     </tr>
                   </thead>
                   <tbody>
-                    {detail && detail.filter((e, i) => {
+                    {DRdetail && DRdetail.filter((e, i) => {
                       if (search === "") {
                         return e
                       }
@@ -87,7 +88,7 @@ function Dailyreport() {
                       <td style={{ fontWeight: "bold" }}>Total</td>
                       <td className="text-center"></td>
                       <td className="text-center"></td>
-                      <td className="text-center" style={{ fontWeight: "bold" }}>{detail?.map((e) => e.value.length)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
+                      <td className="text-center" style={{ fontWeight: "bold" }}>{DRdetail?.map((e) => e.value.length)?.reduce((a, b) => (parseFloat(a) + parseFloat(b)), 0)}</td>
                     </tr>
                   </tbody>
                 </Table>

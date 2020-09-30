@@ -43,42 +43,44 @@ function Partylist(props) {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    UserService.getPartylist().then(
-      (response) => {
-        console.log("before sort", JSON.stringify(response.data))
-        setPartyName(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName))));
-        console.log("after sort", JSON.stringify(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))))
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    setPartyName(JSON.parse(localStorage.getItem("partyName")))
+    // UserService.getPartylist().then(
+    //   (response) => {
+    //     console.log("before sort", JSON.stringify(response.data))
+    //     setPartyName(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName))));
+    //     console.log("after sort", JSON.stringify(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))))
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
 
-        setPartyName(_content);
-      }
-    );
+    //     setPartyName(_content);
+    //   }
+    // );
   }, []);
 
   useEffect(() => {
-    UserService.getAllPartiesdata().then(
-      (response) => {
-        // console.log("--->", JSON.stringify(response.data))
-        setParties(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    setParties(JSON.parse(localStorage.getItem("parties")))
+    // UserService.getAllPartiesdata().then(
+    //   (response) => {
+    //     // console.log("--->", JSON.stringify(response.data))
+    //     setParties(response.data);
+    //   },1
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
 
-        setParties(_content);
-      }
-    );
+    //     setParties(_content);
+    //   }
+    // );
   }, []);
 
   function createAndDownloadPDF(partyName, brokerName) {

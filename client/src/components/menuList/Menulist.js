@@ -11,6 +11,8 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import UserService from "../../services/user.service";
+
 
 // let ps = null;
 
@@ -31,6 +33,7 @@ class Menulist extends React.Component {
       // }
     }
     document.body.classList.toggle("profile-page");
+    UserService.getData();
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {

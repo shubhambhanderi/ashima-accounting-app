@@ -6,7 +6,7 @@ import {
 } from "reactstrap";
 
 function WorpingMeter() {
-  const [detail, setDetail] = useState();
+  const [WMdetail, setWMDetail] = useState();
   const [beam, setBeam] = useState()
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
@@ -34,38 +34,40 @@ function WorpingMeter() {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    UserService.getBeamStock().then(
-      (response) => {
-        var temp = {};
-        response.data.forEach((e, i) => {
-          temp[e.QualityCode] = e.beamStockData.reduce((T, c) => (T + Number(c.Meter)), 0)
-        })
-        console.log(temp)
-        setBeam(temp);
-        UserService.getWorpingMeter().then(
-          (response) => {
-            // console.log("--->", response.data)
-            setDetail(response.data.sort((a, b) => (a.quality.localeCompare(b.quality))));
-          },
-          (error) => {
-            const _content =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            setDetail(_content);
-          })
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setBeam(_content);
-      })
+    setBeam(JSON.parse(localStorage.getItem("beam")));
+    setWMDetail(JSON.parse(localStorage.getItem("WMDetail")));
+    // UserService.getBeamStock().then(
+    //   (response) => {
+    //     var temp = {};
+    //     response.data.forEach((e, i) => {
+    //       temp[e.QualityCode] = e.beamStockData.reduce((T, c) => (T + Number(c.Meter)), 0)
+    //     })
+    //     // console.log(temp)
+    //     setBeam(temp);
+    //     UserService.getWorpingMeter().then(
+    //       (response) => {
+    //         // console.log("--->", response.data)
+    //         setWMDetail(response.data.sort((a, b) => (a.quality.localeCompare(b.quality))));
+    //       },
+    //       (error) => {
+    //         const _content =
+    //           (error.response &&
+    //             error.response.data &&
+    //             error.response.data.message) ||
+    //           error.message ||
+    //           error.toString();
+    //         setWMDetail(_content);
+    //       })
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+    //     setBeam(_content);
+    //   })
 
   }, []);
 
@@ -97,7 +99,7 @@ function WorpingMeter() {
                     </tr>
                   </thead>
                   <tbody>
-                    {detail && detail.map((data, index) => (
+                    {WMdetail && WMdetail.map((data, index) => (
                       <tr key={index} >
                         <td>{index + 1}</td>
                         <td className="text-center">{data.quality}</td>

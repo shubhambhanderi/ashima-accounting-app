@@ -11,7 +11,7 @@ const code190 = ["05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15
 const code230 = ["03", "06", "29", "30", "33", "34", "37", "38", "39", "40", "41", "42"];
 
 function Report() {
-  const [detail, setDetail] = useState();
+  const [MRDetail, setMRDetail] = useState();
   const [OYN, setOYN] = useState(false);
   const [OYNTrue, setOYNTrue] = useState(false);
   const [sub1, setSub1] = useState();
@@ -23,20 +23,22 @@ function Report() {
     setSub1(date.substring(6, 8));
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
-    UserService.getReport().then(
-      (response) => {
-        console.log("--->", response.data)
-        setDetail(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setDetail(_content);
-      })
+
+    setMRDetail(JSON.parse(localStorage.getItem('MRDetail')))
+    // UserService.getReport().then(
+    //   (response) => {
+    //     // console.log("--->", response.data)
+    //     setDetail(response.data);
+    //   },
+    //   (error) => {
+    //     const _content =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+    //     setDetail(_content);
+    //   });
   }, []);
 
   function getNumber(qcode) {
@@ -84,7 +86,7 @@ function Report() {
                   </tr>
                 </thead>
                 <tbody>
-                  {detail && detail.sort((a, b) => (a.mcno.localeCompare(b.mcno))).map((data, index) => {
+                  {MRDetail && MRDetail.sort((a, b) => (a.mcno.localeCompare(b.mcno))).map((data, index) => {
                     if (data.fMinusP > 1500) {
                       return (
                         <tr className="text-center">
@@ -114,7 +116,7 @@ function Report() {
                     <tr className="text-center">
                       <td className="text-center">180</td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           // console.log(code180.includes(data.mcno), data.mcno);
                           if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
@@ -125,7 +127,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
                             return (
@@ -135,7 +137,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code180.includes(data.mcno)) {
                             return (
@@ -148,7 +150,7 @@ function Report() {
                     <tr>
                       <td className="text-center">190</td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
@@ -158,7 +160,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
@@ -168,7 +170,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code190.includes(data.mcno)) {
                             return (
@@ -181,7 +183,7 @@ function Report() {
                     <tr>
                       <td className="text-center">230</td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
@@ -191,7 +193,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
@@ -201,7 +203,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           // let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code230.includes(data.mcno)) {
                             return (
@@ -214,7 +216,7 @@ function Report() {
                     {/* <tr>
                       <td className="text-center">260</td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
@@ -224,7 +226,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
@@ -234,7 +236,7 @@ function Report() {
                         })}
                       </td>
                       <td className="text-center">
-                        {detail && detail.map((data, index) => {
+                        {MRDetail && MRDetail.map((data, index) => {
                           let code = getNumber(data.qualityCode);
                           if (data.fMinusP < 1500 && code > 89 && code < 101) {
                             return (
