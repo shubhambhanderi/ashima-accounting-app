@@ -188,141 +188,125 @@ const getDate = async () => {
   return await promise;
 }
 
-const getData = () => {
+const getData = async () => {
 
   //Partylist
-  getPartylist().then(
-    (response) => {
-      // console.log("before sort", JSON.stringify(response))
-      localStorage.setItem("partyName", JSON.stringify(response.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))));
-      // console.log("after sort", JSON.stringify(response.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))))
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      localStorage.setItem("partyName", JSON.stringify(_content));
-    }
-  );
+  try {
+    const response = await getPartylist();
+    localStorage.setItem("partyName", JSON.stringify(response.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("partyName", JSON.stringify(_content));
+  }
 
   //Partylist
-  getAllPartiesdata().then(
-    (response) => {
-      // console.log("--->", JSON.stringify(response.data))
-      localStorage.setItem("parties", JSON.stringify(response));
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-      localStorage.setItem("parties", JSON.stringify(_content));
-    }
-  );
+  try {
+    const response = await getAllPartiesdata()
+    localStorage.setItem("parties", JSON.stringify(response));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("parties", JSON.stringify(_content));
+  }
 
   //Daily Report
-  getDailyReport().then(
-    (response) => {
-      //  console.log("--->", response.data)
-      localStorage.setItem("DRdetail", JSON.stringify(response.sort((a, b) => (a.key.localeCompare(b.key)))));
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      localStorage.setItem("DRdetail", JSON.stringify(_content));
-    });
+  try {
+    const response = await getDailyReport()
+    localStorage.setItem("DRdetail", JSON.stringify(response.sort((a, b) => (a.key.localeCompare(b.key)))));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("DRdetail", JSON.stringify(_content));
+  }
 
   //Warping Report
-  getBeamStock().then(
-    (response) => {
-      var temp = {};
-      response.forEach((e, i) => {
-        temp[e.QualityCode] = e.beamStockData.reduce((T, c) => (T + Number(c.Meter)), 0)
-      })
-      // console.log(temp)
-      localStorage.setItem("beam", JSON.stringify(temp));
-      getWorpingMeter().then(
-        (response) => {
-          // console.log("--->", response)
-          localStorage.setItem("WMDetail", JSON.stringify(response.sort((a, b) => (a.quality.localeCompare(b.quality)))));
-        },
-        (error) => {
-          const _content =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          localStorage.setItem("WMDetail", _content);
-        })
-    },
-    (error) => {
+  try {
+    const response = await getBeamStock()
+    var temp = {};
+    response.forEach((e, i) => {
+      temp[e.QualityCode] = e.beamStockData.reduce((T, c) => (T + Number(c.Meter)), 0)
+    })
+    // console.log(temp)
+    localStorage.setItem("beam", JSON.stringify(temp));
+    try {
+      const response = await getWorpingMeter();
+      localStorage.setItem("WMDetail", JSON.stringify(response.sort((a, b) => (a.quality.localeCompare(b.quality)))));
+    } catch (error) {
       const _content =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
         error.toString();
-      localStorage.setItem("beam", JSON.stringify(_content));
-    });
+      localStorage.setItem("WMDetail", _content);
+    }
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("beam", JSON.stringify(_content));
+  }
 
   //Beam Stock
-  getBeamStock().then(
-    (response) => {
-      // console.log(response.data)
-      localStorage.setItem("BSdetail", JSON.stringify(response.sort((a, b) => (a.QualityCode.localeCompare(b.QualityCode)))));
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      localStorage.setItem("BSdetail", JSON.stringify(_content));
-    });
+  try {
+    const response = await getBeamStock()
+    localStorage.setItem("BSdetail", JSON.stringify(response.sort((a, b) => (a.QualityCode.localeCompare(b.QualityCode)))));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("BSdetail", JSON.stringify(_content));
+  }
 
   //Stock Report
-  getStockReport().then(
-    (response) => {
-      // console.log(response.data)
-      localStorage.setItem("SRDetail", JSON.stringify(response.sort((a, b) => (a.qualityCode.localeCompare(b.qualityCode)))));
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      localStorage.setItem("SRDetail", JSON.stringify(_content));
-    });
+  try {
+    const response = await getStockReport()
+    localStorage.setItem("SRDetail", JSON.stringify(response.sort((a, b) => (a.qualityCode.localeCompare(b.qualityCode)))));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("SRDetail", JSON.stringify(_content));
+  }
 
   //Machine Report
-  getReport().then(
-    (response) => {
-      // console.log("--->", response.data)
-      localStorage.setItem("MRDetail", JSON.stringify(response));
-    },
-    (error) => {
-      const _content =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      localStorage.setItem("MRDetail", JSON.stringify(_content));
-    });
+  try {
+    const response = await getReport()
+    // console.log("--->", response.data)
+    localStorage.setItem("MRDetail", JSON.stringify(response));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("MRDetail", JSON.stringify(_content));
+  }
+
+  return "Done !!";
 }
 export default {
   getPartylist,

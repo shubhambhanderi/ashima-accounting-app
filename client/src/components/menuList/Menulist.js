@@ -127,10 +127,12 @@ class Menulist extends React.Component {
       })
     }
     console.log(this.state)
-    function apidata(e) {
+    async function apidata(e) {
       try {
-        UserService.getData();
-        updateFetchState(true)
+        updateFetchState(false);
+        const msg = await UserService.getData();
+        console.log("---->", msg)
+        updateFetchState(true);
       } catch (error) {
         console.log(error)
         updateFetchState(false)
@@ -153,7 +155,12 @@ class Menulist extends React.Component {
             />
             <Container className="align-items-center">
               <div>
-                <Button variant="contained" color="primary" onClick={e => apidata(e)}>Refresh</Button>
+                <center>
+                  <Button variant="contained" color="primary" onClick={e => apidata(e)}>Load Latest Data</Button>
+                  {
+                    !this.state.datafetched && <p><br /><br />Loading...</p>
+                  }
+                </center>
               </div>
               <Row className="pt-5">
                 <Col md="6" className="ml-auto mr-auto">
