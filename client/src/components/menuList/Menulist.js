@@ -21,7 +21,8 @@ class Menulist extends React.Component {
     super(props);
     this.state = {
       pills: 1,
-      datafetched: false
+      datafetched: false,
+      loading: false
     };
   }
   componentDidMount() {
@@ -121,18 +122,18 @@ class Menulist extends React.Component {
 
 
   render() {
-    const updateFetchState = (e) => {
+    const updateFetchState = (f, t) => {
       this.setState({
-        datafetched: e
+        datafetched: f,
+        loading: t
       })
     }
     console.log(this.state)
     async function apidata(e) {
       try {
-        updateFetchState(false);
+        updateFetchState(false, true);
         const msg = await UserService.getData();
-        console.log("---->", msg)
-        updateFetchState(true);
+        updateFetchState(true, false);
       } catch (error) {
         console.log(error)
         updateFetchState(false)
@@ -158,7 +159,7 @@ class Menulist extends React.Component {
                 <center>
                   <Button variant="contained" color="primary" onClick={e => apidata(e)}>Load Latest Data</Button>
                   {
-                    !this.state.datafetched && <p><br /><br />Loading...</p>
+                    this.state.loading && <p><br /><br />Loading...</p>
                   }
                 </center>
               </div>
