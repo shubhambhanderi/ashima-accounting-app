@@ -12,7 +12,7 @@ import {
   Col,
 } from "reactstrap";
 import UserService from "../../services/user.service";
-
+import { Button } from '@material-ui/core';
 
 // let ps = null;
 
@@ -20,7 +20,8 @@ class Menulist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pills: 1
+      pills: 1,
+      datafetched: false
     };
   }
   componentDidMount() {
@@ -33,7 +34,12 @@ class Menulist extends React.Component {
       // }
     }
     document.body.classList.toggle("profile-page");
-    UserService.getData();
+
+    if (!!localStorage.getItem("DRdetail") && !!localStorage.getItem("partyName") && !!localStorage.getItem("parties") && !!localStorage.getItem("beam") && !!localStorage.getItem("WMDetail") && !!localStorage.getItem("SRDetail") && !!localStorage.getItem("MRDetail")) {
+      this.setState({
+        datafetched: true
+      })
+    }
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -45,6 +51,9 @@ class Menulist extends React.Component {
   }
   toggleTabsDailyReport = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -53,6 +62,9 @@ class Menulist extends React.Component {
   };
   toggleTabsSales = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -61,6 +73,9 @@ class Menulist extends React.Component {
   };
   toggleTabsBeamStock = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -70,6 +85,9 @@ class Menulist extends React.Component {
 
   toggleTabsWorpingReport = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -79,6 +97,9 @@ class Menulist extends React.Component {
 
   toggleTabsStockReport = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -88,6 +109,9 @@ class Menulist extends React.Component {
 
   toggleTabsReport = (e, stateName, index) => {
     e.preventDefault();
+    if (!this.state.datafetched) {
+      return
+    }
     this.setState({
       [stateName]: index
     });
@@ -97,6 +121,22 @@ class Menulist extends React.Component {
 
 
   render() {
+    const updateFetchState = (e) => {
+      this.setState({
+        datafetched: e
+      })
+    }
+    console.log(this.state)
+    function apidata(e) {
+      try {
+        UserService.getData();
+        updateFetchState(true)
+      } catch (error) {
+        console.log(error)
+        updateFetchState(false)
+      }
+    };
+
     return (
       <>
         <div className="wrapper">
@@ -112,13 +152,16 @@ class Menulist extends React.Component {
               src={require("../../assets/img/path4.png")}
             />
             <Container className="align-items-center">
-              <Row>
+              <div>
+                <Button variant="contained" color="primary" onClick={e => apidata(e)}>Refresh</Button>
+              </div>
+              <Row className="pt-5">
                 <Col md="6" className="ml-auto mr-auto">
                   <Nav className="justify-content-center nav-pills-info nav-pills-icons" pills>
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsDailyReport(e, "pills", 1)}
                         href="#pablo"
@@ -130,7 +173,7 @@ class Menulist extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsSales(e, "pills", 2)}
                         href="#pablo"
@@ -142,7 +185,7 @@ class Menulist extends React.Component {
                     <NavItem >
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsWorpingReport(e, "pills", 1)}
                         href="#pablo"
@@ -154,7 +197,7 @@ class Menulist extends React.Component {
                     <NavItem >
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsBeamStock(e, "pills", 1)}
                         href="#pablo"
@@ -166,7 +209,7 @@ class Menulist extends React.Component {
                     <NavItem >
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsStockReport(e, "pills", 1)}
                         href="#pablo"
@@ -178,7 +221,7 @@ class Menulist extends React.Component {
                     <NavItem >
                       <NavLink
                         className={classnames({
-                          "active show": 1
+                          "active show": this.state.datafetched ? 1 : 0
                         })}
                         onClick={e => this.toggleTabsReport(e, "pills", 1)}
                         href="#pablo"

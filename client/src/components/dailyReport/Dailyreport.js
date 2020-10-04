@@ -18,10 +18,12 @@ function Dailyreport() {
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));
 
-    setDRdetail(JSON.parse(localStorage.getItem("DRdetail")))
+    setDRdetail(JSON.parse(localStorage.getItem("DRdetail")));
     // UserService.getDailyReport().then(
     //   (response) => {
     //     // console.log("--->", response.data)
+    //     // localStorage.setItem("DRdetail", JSON.stringify(response.data.sort((a, b) => (a.key.localeCompare(b.key)))));
+    //     // setDRdetail(JSON.parse(localStorage.getItem("DRdetail")));
     //     setDRdetail(response.data.sort((a, b) => (a.key.localeCompare(b.key))));
     //   },
     //   (error) => {
@@ -32,7 +34,8 @@ function Dailyreport() {
     //       error.message ||
     //       error.toString();
     //     setDRdetail(_content);
-    //   })
+    //   });
+
   }, []);
 
   return (

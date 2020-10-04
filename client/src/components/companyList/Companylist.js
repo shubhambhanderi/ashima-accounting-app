@@ -25,7 +25,7 @@ class Companylist extends React.Component {
   componentDidMount() {
     UserService.getDate().then(
       (response) => {
-        const res = response.data[0].backupName;
+        const res = response[0].backupName;
         // const sub1 = res.substring(5, 7);
         // const sub2 = res.substring(7, 9);
         // const sub3 = res.substring(9, 11);
