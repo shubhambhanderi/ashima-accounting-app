@@ -39,8 +39,12 @@ function Partydetail(props) {
 
     UserService.getPartydata(ps.party, ps.broker).then(
       (response) => {
-        console.log("--->", response.data)
-        setDetail(response.data.filter(e => (e.OYN === ps.OYN)));
+        console.log("--->", ps.OYN)
+        if (ps.OYN === undefined) {
+          setDetail(response.data);
+        } else {
+          setDetail(response.data.filter(e => (e.OYN === ps.OYN)));
+        }
       },
       (error) => {
         const _content =

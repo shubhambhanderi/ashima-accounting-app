@@ -35,7 +35,7 @@ function Partylist(props) {
   // const [redi, setredire] = useState(null);
   const [redirectFlag, setRedirectFlag] = useState(false);
   const [redirectComp, setRedirectComp] = useState(null);
-  const [OYNTrue, setOYNTrue] = useState(false);
+  // const [OYNTrue, setOYNTrue] = useState(false);
   const [search, setSearch] = useState("");
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
@@ -48,6 +48,15 @@ function Partylist(props) {
     // console.log(party, broker)
     props.history.push('/partylist');
     setpartyObject({ party, broker, OYN });
+    setRedirectComp(<Redirect to={"/partydetail"} />);
+    setRedirectFlag(true);
+    // window.location.reload();
+  };
+
+  const handleClickDetailALL = (e, party, broker) => {
+    // console.log(party, broker)
+    props.history.push('/partylist');
+    setpartyObject({ party, broker });
     setRedirectComp(<Redirect to={"/partydetail"} />);
     setRedirectFlag(true);
     // window.location.reload();
@@ -80,6 +89,44 @@ function Partylist(props) {
 
   function createAndDownloadPDF(partyName, brokerName) {
     const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName && e.OYN === OYN));
+    // console.log(postRequestData);
+    const str = htmlStrPartylist(postRequestData, partyName, brokerName);
+    enqueueSnackbar("PDF Generation in progress...", {
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'left',
+      },
+      variant: 'success',
+    });
+    UserService.pythonPDFSerivce({ data: str })
+      .then((res) => {
+        // console.log("success", res.data);
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, 'new.pdf');
+        closeSnackbar();
+      })
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        enqueueSnackbar(resMessage, {
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          variant: 'error',
+        });
+        console.log(error);
+      }
+      )
+  }
+
+  function createAndDownloadPDFALL(partyName, brokerName) {
+    const postRequestData = parties.filter(e => (e.partyName === partyName && e.brokerName === brokerName));
     // console.log(postRequestData);
     const str = htmlStrPartylist(postRequestData, partyName, brokerName);
     enqueueSnackbar("PDF Generation in progress...", {
@@ -198,10 +245,10 @@ function Partylist(props) {
                   <div>
                     <Row>
                       <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{party._id.partyName} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{party._id.brokerName}</h4>
-                      <Button className="btn-icon ml-auto" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                      <Button className="btn-icon ml-auto" onClick={e => handleClickDetailALL(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
                         <i className="fa fa-user"></i>
                       </Button>{` `}
-                      <Button className="btn-icon ml-5" onClick={e => createAndDownloadPDF(party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                      <Button className="btn-icon ml-5" onClick={e => createAndDownloadPDFALL(party._id.partyName, party._id.brokerName)} color="info" size="sm">
                         <i className="tim-icons icon-paper"></i>
                       </Button>{` `}
                     </Row>
