@@ -40,7 +40,7 @@ function Partylist(props) {
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
-  const [selectedValue, setSelectedValue] = useState('all');
+  const [selectedValue, setSelectedValue] = useState('pending');
   const [root, setRoot] = useState(true);
 
 
