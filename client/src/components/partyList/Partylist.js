@@ -41,7 +41,7 @@ function Partylist(props) {
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
   const [selectedValue, setSelectedValue] = useState('pending');
-  const [root, setRoot] = useState(true);
+  const [root, setRoot] = useState(false);
 
 
   const handleClickDetail = (e, party, broker) => {
