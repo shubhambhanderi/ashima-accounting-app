@@ -11,11 +11,24 @@ import htmlStrPartylist from '../htmlStringGenerator/htmlStrPartylist';
 import { saveAs } from 'file-saver';
 import { useSnackbar } from 'notistack';
 import Switch from '@material-ui/core/Switch';
+import Radio from '@material-ui/core/Radio';
+import { withStyles } from '@material-ui/core/styles';
+import { pink } from '@material-ui/core/colors';
 
+const HotpinkRadio = withStyles({
+  root: {
+    color: pink[400],
+    '&$checked': {
+      color: pink[600],
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
 
 function Partylist(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [partyName, setPartyName] = useState();
+  const [uniquepartyName, setUniquepartyName] = useState();
   const [OYN, setOYN] = useState("N");
   const [parties, setParties] = useState();
   const [partyObject, setpartyObject] = props.partyState;
@@ -27,6 +40,9 @@ function Partylist(props) {
   const [sub1, setSub1] = useState();
   const [sub2, setSub2] = useState();
   const [sub3, setSub3] = useState();
+  const [selectedValue, setSelectedValue] = useState('all');
+  const [root, setRoot] = useState(true);
+
 
   const handleClickDetail = (e, party, broker) => {
     // console.log(party, broker)
@@ -44,43 +60,22 @@ function Partylist(props) {
     setSub3(date.substring(10, 12));
 
     setPartyName(JSON.parse(localStorage.getItem("partyName")))
-    // UserService.getPartylist().then(
-    //   (response) => {
-    //     console.log("before sort", JSON.stringify(response.data))
-    //     setPartyName(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName))));
-    //     console.log("after sort", JSON.stringify(response.data.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))))
-    //   },
-    //   (error) => {
-    //     const _content =
-    //       (error.response &&
-    //         error.response.data &&
-    //         error.response.data.message) ||
-    //       error.message ||
-    //       error.toString();
 
-    //     setPartyName(_content);
-    //   }
-    // );
+    let resArr = [];
+    let temp = JSON.parse(localStorage.getItem("partyName"));
+    temp.forEach(function (item) {
+      let i = resArr.findIndex(x => ((x._id.partyName == item._id.partyName) && (x._id.brokerName == item._id.brokerName)));
+      // let j = resArr.findIndex(x => x._id.brokerName == item._id.brokerName);
+      if (i <= -1) {
+        resArr.push({ _id: { partyName: item._id.partyName, brokerName: item._id.brokerName } });
+      }
+      return null;
+    });
+    setUniquepartyName(resArr)
   }, []);
 
   useEffect(() => {
-    setParties(JSON.parse(localStorage.getItem("parties")))
-    // UserService.getAllPartiesdata().then(
-    //   (response) => {
-    //     // console.log("--->", JSON.stringify(response.data))
-    //     setParties(response.data);
-    //   },1
-    //   (error) => {
-    //     const _content =
-    //       (error.response &&
-    //         error.response.data &&
-    //         error.response.data.message) ||
-    //       error.message ||
-    //       error.toString();
-
-    //     setParties(_content);
-    //   }
-    // );
+    setParties(JSON.parse(localStorage.getItem("parties")));
   }, []);
 
   function createAndDownloadPDF(partyName, brokerName) {
@@ -125,9 +120,22 @@ function Partylist(props) {
     return e?.getDate() + "/" + (e?.getMonth() + 1) + "/" + e?.getFullYear()
   }
 
-  const handleChange = (event) => {
-    setOYNTrue(event.target.checked);
-    setOYN(event.target.checked ? 'Y' : 'N')
+  // const handleChange = (event) => {
+  //   setOYNTrue(event.target.checked);
+  //   setOYN(event.target.checked ? 'Y' : 'N')
+  // };
+
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+    if (event.target.value === 'all') {
+      setRoot(true);
+    } else if (event.target.value === 'pending') {
+      setRoot(false);
+      setOYN('N');
+    } else if (event.target.value === 'completed') {
+      setRoot(false);
+      setOYN('Y');
+    }
   };
 
   return (
@@ -147,6 +155,35 @@ function Partylist(props) {
                 <input id="search" type="text" style={{ width: "100%" }} onChange={e => setSearch(e.target.value.toString().toLowerCase())} />
               </div>
               <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
+                All :
+                <HotpinkRadio
+                  checked={selectedValue === 'all'}
+                  onChange={handleRadioChange}
+                  value="all"
+                  color="primary"
+                  name="radio-button-demo"
+                  inputProps={{ 'aria-label': 'All' }}
+                />
+                Pending :
+                <HotpinkRadio
+                  checked={selectedValue === 'pending'}
+                  onChange={handleRadioChange}
+                  value="pending"
+                  color="primary"
+                  name="radio-button-demo"
+                  inputProps={{ 'aria-label': 'pending' }}
+                />
+                Completed :
+                <HotpinkRadio
+                  checked={selectedValue === 'completed'}
+                  onChange={handleRadioChange}
+                  value="completed"
+                  color="primary"
+                  name="radio-button-demo"
+                  inputProps={{ 'aria-label': 'Completed' }}
+                />
+              </div>
+              {/* <div style={{ color: "white", fontWeight: "bold" }} className="pt-5">
                 {OYNTrue ? "Completed" : "Pending"}
 
                 <Switch
@@ -155,8 +192,54 @@ function Partylist(props) {
                   name="checkedA"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
-              </div>
-              {partyName && partyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).filter((e, i) => (e._id.OYN === OYN)).map((party, index) => (
+              </div> */}
+              {root ? (uniquepartyName && uniquepartyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).map((party, index) => (
+                <div className="pt-5" id="pdfdiv">
+                  <div>
+                    <Row>
+                      <h4><b style={{ color: 'hotpink' }}> PARTY: </b>{party._id.partyName} <br /> <b style={{ color: 'hotpink' }}>BROKER: </b>{party._id.brokerName}</h4>
+                      <Button className="btn-icon ml-auto" onClick={e => handleClickDetail(e, party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                        <i className="fa fa-user"></i>
+                      </Button>{` `}
+                      <Button className="btn-icon ml-5" onClick={e => createAndDownloadPDF(party._id.partyName, party._id.brokerName)} color="info" size="sm">
+                        <i className="tim-icons icon-paper"></i>
+                      </Button>{` `}
+                    </Row>
+                  </div>
+                  <Table responsive>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th className="text-center">Order Date</th>
+                        <th className="text-center">Q Code</th>
+                        <th className="text-center">Ord. No</th>
+                        <th className="text-center">Ord. Quantity</th>
+                        <th className="text-center">Ord. Rate</th>
+                        <th className="text-center">Supply Quan.</th>
+                        <th className="text-center">Balance Quan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {parties && parties.map((a, key) => {
+                        if (a.partyName === party._id.partyName && a.brokerName === party._id.brokerName) {
+                          return (
+                            <tr key={key}>
+                              <td className="text-center">{key}</td>
+                              <td className="text-center">{dateToStr(new Date(a.orderDate))}</td>
+                              <td className="text-center">{a.itemName}</td>
+                              <td className="text-center">{a.orderNo}</td>
+                              <td className="text-center">{a.orderQuantity}</td>
+                              <td className="text-center">{a.orderRate}</td>
+                              <td className="text-center">{a.supplyQuantity}</td>
+                              <td className="text-center">{a.balanceQuantity}</td>
+                            </tr>
+                          )
+                        }
+                      })}
+                    </tbody>
+                  </Table>
+                </div>
+              ))) : (partyName && partyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).filter((e, i) => (e._id.OYN === OYN)).map((party, index) => (
                 <div className="pt-5" id="pdfdiv">
                   <div>
                     <Row>
@@ -202,7 +285,7 @@ function Partylist(props) {
                     </tbody>
                   </Table>
                 </div>
-              ))}
+              )))}
             </Container>
           </div>
         </div>
