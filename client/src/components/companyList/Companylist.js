@@ -23,24 +23,6 @@ class Companylist extends React.Component {
     };
   }
   componentDidMount() {
-    UserService.getDate().then(
-      (response) => {
-        const res = response[0].backupName;
-        // const sub1 = res.substring(5, 7);
-        // const sub2 = res.substring(7, 9);
-        // const sub3 = res.substring(9, 11);
-        localStorage.setItem("date", JSON.stringify(res));
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        console.log(_content);
-      });
-
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");

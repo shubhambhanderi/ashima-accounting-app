@@ -14,6 +14,7 @@ function Dailyreport() {
 
   useEffect(() => {
     const date = localStorage.getItem('date');
+    console.log(date)
     setSub1(date.substring(6, 8));
     setSub2(date.substring(8, 10));
     setSub3(date.substring(10, 12));

@@ -189,6 +189,19 @@ const getDate = async () => {
 }
 
 const getData = async () => {
+  //Date
+  try {
+    const response = await getDate();
+    localStorage.setItem("date", JSON.stringify(response[0].backupName));
+  } catch (error) {
+    const _content =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    localStorage.setItem("date", JSON.stringify(_content));
+  }
 
   //Partylist
   try {

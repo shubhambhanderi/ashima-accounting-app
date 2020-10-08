@@ -17701,7 +17701,7 @@ textarea.form-control:active {
 }
 
 .nav-pills.nav-pills:not(.flex-column) .nav-item:not(:last-child) .nav-link {
-  margin-right: 10px;
+  margin-right: 8px;
   margin-bottom: 5px;
 }
 
@@ -17717,7 +17717,7 @@ textarea.form-control:active {
   max-width: 80px;
   min-width: auto;
   padding: 0;
-  width: 80px;
+  width: 50px;
 }
 .nav-pills.nav-pills-just-icons .nav-item .nav-link .tim-icons {
   font-size: 24px;
@@ -17729,6 +17729,7 @@ textarea.form-control:active {
   text-align: center;
   padding: 11px 23px;
   min-width: 100px;
+  width: 120px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.5);
   background-color: #1f2251;

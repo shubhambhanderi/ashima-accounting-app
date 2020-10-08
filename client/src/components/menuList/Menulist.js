@@ -22,7 +22,10 @@ class Menulist extends React.Component {
     this.state = {
       pills: 1,
       datafetched: false,
-      loading: false
+      loading: false,
+      sub1: null,
+      sub2: null,
+      sub3: null
     };
   }
   componentDidMount() {
@@ -41,6 +44,13 @@ class Menulist extends React.Component {
         datafetched: true
       })
     }
+
+    const date = localStorage.getItem('date');
+    this.setState({
+      sub1: date.substring(6, 8),
+      sub2: date.substring(8, 10),
+      sub3: date.substring(10, 12)
+    });
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -155,6 +165,9 @@ class Menulist extends React.Component {
               src={require("../../assets/img/path4.png")}
             />
             <Container className="align-items-center">
+              <div>
+                Date : {this.state.sub1}-{this.state.sub2}-{this.state.sub3}
+              </div>
               <div>
                 <center>
                   <Button variant="contained" color="primary" onClick={e => apidata(e)}>Load Latest Data</Button>
