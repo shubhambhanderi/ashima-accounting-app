@@ -240,7 +240,7 @@ function Partylist(props) {
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
               </div> */}
-              {root ? (uniquepartyName && uniquepartyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).map((party, index) => (
+              {root ? (uniquepartyName && uniquepartyName.filter((e, i) => (e._id.partyName?.toString().toLowerCase().includes(search))).map((party, index) => (
                 <div className="pt-5" id="pdfdiv">
                   <div>
                     <Row>
@@ -286,7 +286,7 @@ function Partylist(props) {
                     </tbody>
                   </Table>
                 </div>
-              ))) : (partyName && partyName.filter((e, i) => (e._id.partyName.toString().toLowerCase().includes(search))).filter((e, i) => (e._id.OYN === OYN)).map((party, index) => (
+              ))) : (partyName && partyName.filter((e, i) => (e._id.partyName?.toString().toLowerCase().includes(search))).filter((e, i) => (e._id.OYN === OYN)).map((party, index) => (
                 <div className="pt-5" id="pdfdiv">
                   <div>
                     <Row>

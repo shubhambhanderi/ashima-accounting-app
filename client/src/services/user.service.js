@@ -206,7 +206,7 @@ const getData = async () => {
   //Partylist
   try {
     const response = await getPartylist();
-    localStorage.setItem("partyName", JSON.stringify(response.sort((a, b) => (a._id.partyName.localeCompare(b._id.partyName)))));
+    localStorage.setItem("partyName", JSON.stringify(response.sort((a, b) => (a._id.partyName?.localeCompare(b._id.partyName)))));
   } catch (error) {
     const _content =
       (error.response &&
